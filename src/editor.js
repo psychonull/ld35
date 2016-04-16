@@ -37,10 +37,74 @@ $(document).on('ready', () => {
     $('#import-modal').modal('show');
   });
 
+  $('#process-import').on('click', function(e){
+    e.preventDefault();
+    let level;
+    try {
+      level = JSON.parse($('#import-text').val());
+    } catch (e) {
+      window.alert('bad json');
+    }
+    refreshState(level);
+    refreshControlsFromState();
+
+    $('#import-modal').modal('close');
+  });
+
   $('#export-text').on('focus', function(){
     $(this).select();
   });
 });
+
+function refreshState(level){
+  state.x = level.gridSize[0];
+  state.y = level.gridSize[1];
+  state.maxMoves = level.maxMoves;
+  level.cells.forEach((row, j) => {
+    row.forEach((cell, i) => {
+      if(cell - 100 >= 0 && cell - 100 < 100){
+        state.start = [i, j];
+      }
+      if(cell - 900 >= 0 && cell - 900 < 100){
+        state.end = [i, j];
+      }
+    });
+  });
+  state.map = level.cells.map((row) => {
+    return row.map((cell) => {
+      if(cell - 100 >= 0 && cell - 100 < 100){
+        return cell - 100;
+      }
+      if(cell - 900 >= 0 && cell - 900 < 100){
+        return cell - 900;
+      }
+      return cell;
+    });
+  });
+}
+
+function refreshControlsFromState(){
+  $('#x').val(state.x);
+  $('#y').val(state.y);
+  $('#maxMoves').val(state.maxMoves);
+  let $grid = $('<table>');
+  for(let i = 0; i < state.y; i++){
+    let $row = $('<tr>');
+
+    for(let j = 0; j < state.x; j++){
+      let $td = $(`<td data-location="${j}-${i}" class="${'opt' + state.map[i][j]}" >`);
+      if(state.start[0] === j && state.start[1] === i){
+        $td.addClass('opt100');
+      }
+      if(state.end[0] === j && state.end[1] === i){
+        $td.addClass('opt900');
+      }
+      $row.append($td);
+    }
+    $grid.append($row);
+  }
+  $('#grid-container').html($grid);
+}
 
 function getLevelFromState(state){
   let cells = state.map.map((row, j) => {
