@@ -1,11 +1,17 @@
 
 import paper from 'paper';
-import Grid from './Grid';
+import Game from './Game';
 
 paper.install(window);
+
 window.onload = function() {
   paper.setup('game-viewport');
 
-  let grid = new Grid();
-  grid.draw(paper, 4, 4, paper.view.bounds);
+  let game = new Game();
+
+  view.onFrame = e => {
+    game.onFrame(e);
+	};
+
+  view.draw();
 };

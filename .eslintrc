@@ -20,7 +20,9 @@
 
   ],
   "globals": {
-
+    paper: true,
+    view: true,
+    Path: true
   },
   "extends": [
     "eslint:recommended"

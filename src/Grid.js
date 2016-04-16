@@ -1,18 +1,46 @@
 
-import { Path } from 'paper';
-
 export default class Grid {
 
-  draw(paper, w, h, ctn){
-    var wRect = ctn.width / w;
-    var hRect = ctn.height / h;
+  constructor(w, h, ctn){
+    this.sizeW = w;
+    this.sizeH = h;
+    this.container = ctn;
 
-    for (var i = 0; i < w; i++) {
-      for (var j = 0; j < h; j++) {
-        var aRect = new Path.Rectangle(ctn.left + i * wRect, ctn.top + j * hRect, wRect, hRect);
-        aRect.strokeColor = 'black';
-        aRect.fillColor = 'white';
+    this.cells = [];
+    this._generate();
+  }
+
+  _generate(){
+    let w = this.sizeW;
+    let h = this.sizeH;
+    let ctn = this.container;
+
+    let wCell = ctn.width / w;
+    let hCell = ctn.height / h;
+
+    for (let i = 0; i < w; i++) {
+      for (let j = 0; j < h; j++) {
+
+        var cell = new Path.Rectangle(
+          ctn.left + i * wCell,
+          ctn.top + j * hCell,
+          wCell,
+          hCell
+        );
+
+        cell.strokeColor = 'black';
+        cell.fillColor = 'white';
+
+        this.cells.push(cell);
       }
     }
   }
+
+  onFrame(/*e*/) {
+    //console.dir(e);
+    //e.delta
+    //e.time
+    //e.count
+  }
+
 }
