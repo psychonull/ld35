@@ -47,8 +47,7 @@ export default class Grid {
             w: wCell,
             h: hCell
           },
-          code,
-          strokeColor: (target && 'yellow') || (current && 'white') || 'black'
+          code
         };
 
         let cell;
@@ -59,10 +58,14 @@ export default class Grid {
           default: cell = new Cell(opts); break;
         }
 
+        cell.onMove = this.onMoveTo.bind(this, cell);
+
         if (current){
+          cell.setCurrent();
           this.current = cell;
         }
         else if (target){
+          cell.setTarget();
           this.target = cell;
         }
 
@@ -74,15 +77,28 @@ export default class Grid {
 
   calculateMoves() {
     this.cells.forEach( c => {
-      let cPos = this.current.position;
-      if (c.position.x === cPos.x && c.position.y === cPos.y){
+      if (c.id === this.current.id){
         c.canMove = false;
         return;
       }
 
       c.canMove = this.current.canMoveTo(c.position);
     });
+  }
 
+  onMoveTo(cell){
+    this.current.canMove = false;
+    this.current.unsetCurrent();
+
+    if (cell.id === this.target.id){
+      window.alert("You Win!");
+      window.location.reload();
+    }
+
+    this.current = cell;
+    this.current.setCurrent();
+
+    this.calculateMoves();
   }
 
 }

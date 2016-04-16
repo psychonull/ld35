@@ -1,10 +1,15 @@
 
+import { generate as getId } from 'shortid';
 import colorMap from './colorMap';
+
+const defaultStroke = 'black';
 
 export default class Cell {
 
   constructor(options){
     Object.assign(this, options);
+    this.id = getId();
+
     this.canMove = false;
     this._generate();
   }
@@ -24,7 +29,7 @@ export default class Cell {
     this.rect.style = {
       fillColor,
       strokeWidth: lwh,
-      strokeColor: this.strokeColor
+      strokeColor: defaultStroke
     };
 
     this.rect.onFrame = e => this.onFrame(e);
@@ -42,6 +47,12 @@ export default class Cell {
       this.rect.fillColor = fillColor;
     };
 
+    this.rect.onClick = () => {
+      if (this.canMove){
+        this.onMove();
+      }
+    };
+
     //DEBUG
     let text = new PointText(this.rect.bounds.center);
     text.content = this.code;
@@ -53,6 +64,18 @@ export default class Cell {
       justification: 'center'
     };
 
+  }
+
+  setCurrent(){
+    this.rect.style.strokeColor = 'white';
+  }
+
+  unsetCurrent(){
+    this.rect.style.strokeColor = defaultStroke;
+  }
+
+  setTarget(){
+    this.rect.style.strokeColor = 'yellow';
   }
 
   canMoveTo(/*position*/){
