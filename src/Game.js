@@ -1,10 +1,23 @@
 
 import Grid from './Grid';
+import levels from './levels';
 
 export default class Game {
 
   constructor(){
-    this.grid = new Grid(4, 4, view.bounds);
+    view.onFrame = e => {
+      this.onFrame(e);
+    };
+  }
+
+  start(lvlIdx){
+    this.clear();
+    this.grid = new Grid(levels[lvlIdx], view.bounds);
+    view.draw();
+  }
+
+  clear(){
+    project.activeLayer.removeChildren();
   }
 
   onFrame(e) {

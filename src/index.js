@@ -9,9 +9,6 @@ window.onload = function() {
 
   let game = new Game();
 
-  view.onFrame = e => {
-    game.onFrame(e);
-	};
-
-  view.draw();
+  // move this into a menu (param is level index)
+  game.start(0);
 };

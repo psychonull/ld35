@@ -3,3 +3,13 @@ body {
   margin: 0;
   color: #fff;
 }
+
+.game-container {
+  height: 100vh;
+
+  canvas {
+    display: block;
+    margin: auto;
+    padding-top: 20px;
+  }
+}
