@@ -1,46 +1,52 @@
+import Cell from './Cell';
 
 export default class Grid {
 
-  constructor(w, h, ctn){
-    this.sizeW = w;
-    this.sizeH = h;
-    this.container = ctn;
+  constructor(cfg, bounds){
+    this.cfg = cfg;
+    this.bounds = bounds;
 
     this.cells = [];
     this._generate();
   }
 
   _generate(){
-    let w = this.sizeW;
-    let h = this.sizeH;
-    let ctn = this.container;
+    let w = this.cfg.gridSize[0];
+    let h = this.cfg.gridSize[1];
+    let ctn = this.bounds;
 
+    // TODO: Improve this calculation
     let wCell = ctn.width / w;
     let hCell = ctn.height / h;
 
     for (let i = 0; i < w; i++) {
       for (let j = 0; j < h; j++) {
+        let code = this.cfg.cells[j][i];
+        let target = code >= 900 && code <= 999 ? true : false;
+        let current = code >= 100 && code <= 199 ? true : false;
 
-        var cell = new Path.Rectangle(
-          ctn.left + i * wCell,
-          ctn.top + j * hCell,
-          wCell,
-          hCell
-        );
+        if (current || target){
+          code = +(code / 100).toString().split('.')[1];
+        }
 
-        cell.strokeColor = 'black';
-        cell.fillColor = 'white';
-
-        this.cells.push(cell);
+        this.cells.push(new Cell({
+          attrs: {
+            x: ctn.left + i * wCell,
+            y: ctn.top + j * hCell,
+            w: wCell,
+            h: hCell
+          },
+          code,
+          target,
+          current
+        }));
       }
     }
+
   }
 
-  onFrame(/*e*/) {
-    //console.dir(e);
-    //e.delta
-    //e.time
-    //e.count
+  onFrame(e) {
+    this.cells.forEach( c => c.onFrame(e) );
   }
 
 }

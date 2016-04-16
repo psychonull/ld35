@@ -22,7 +22,9 @@
   "globals": {
     paper: true,
     view: true,
-    Path: true
+    project: true,
+    Path: true,
+    PointText: true
   },
   "extends": [
     "eslint:recommended"
