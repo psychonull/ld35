@@ -77,7 +77,7 @@ export default class Grid {
 
   calculateMoves() {
     this.cells.forEach( c => {
-      if (c.id === this.current.id){
+      if (c.id === this.current.id || c.code === 0){
         c.canMove = false;
         return;
       }
