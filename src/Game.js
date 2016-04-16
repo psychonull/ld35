@@ -5,9 +5,7 @@ import levels from './levels';
 export default class Game {
 
   constructor(){
-    view.onFrame = e => {
-      this.onFrame(e);
-    };
+    view.onFrame = e => this.onFrame(e);
   }
 
   start(lvlIdx){
@@ -20,12 +18,13 @@ export default class Game {
     project.activeLayer.removeChildren();
   }
 
-  onFrame(e) {
+  onFrame(/*e*/) {
+    // View Main onFrame
+
     //console.dir(e);
     //e.delta
     //e.time
     //e.count
-    this.grid.onFrame(e);
   }
 
 }

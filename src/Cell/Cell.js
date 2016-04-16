@@ -5,6 +5,7 @@ export default class Cell {
 
   constructor(options){
     Object.assign(this, options);
+    this.canMove = false;
     this._generate();
   }
 
@@ -23,10 +24,25 @@ export default class Cell {
     this.rect.style = {
       fillColor,
       strokeWidth: lwh,
-      strokeColor: (this.target && 'yellow') || (this.current && 'white') || 'black'
+      strokeColor: this.strokeColor
     };
 
- //DEBUG
+    this.rect.onFrame = e => this.onFrame(e);
+
+    this.rect.onMouseEnter = () => {
+      if (!this.canMove){
+        this.rect.fillColor = 'red';
+        return;
+      }
+
+      this.rect.fillColor = 'green';
+    };
+
+    this.rect.onMouseLeave = () => {
+      this.rect.fillColor = fillColor;
+    };
+
+    //DEBUG
     let text = new PointText(this.rect.bounds.center);
     text.content = this.code;
     text.style = {
@@ -39,8 +55,13 @@ export default class Cell {
 
   }
 
-  onFrame() {
+  canMoveTo(/*position*/){
+    // return false if is not Implemented
+    return false;
+  }
 
+  onFrame() {
+    //this.rect.rotate(1);
   }
 
 }

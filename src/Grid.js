@@ -1,4 +1,9 @@
-import Cell from './Cell';
+import {
+  Cell,
+  Square,
+  Triangle,
+  Circle
+} from './Cell';
 
 export default class Grid {
 
@@ -7,7 +12,12 @@ export default class Grid {
     this.bounds = bounds;
 
     this.cells = [];
+    this.current = null;
+    this.target = null;
+
     this._generate();
+
+    this.calculateMoves();
   }
 
   _generate(){
@@ -29,7 +39,8 @@ export default class Grid {
           code = +(code / 100).toString().split('.')[1];
         }
 
-        this.cells.push(new Cell({
+        let opts = {
+          position: { x: j, y: i},
           attrs: {
             x: ctn.left + i * wCell,
             y: ctn.top + j * hCell,
@@ -37,16 +48,41 @@ export default class Grid {
             h: hCell
           },
           code,
-          target,
-          current
-        }));
+          strokeColor: (target && 'yellow') || (current && 'white') || 'black'
+        };
+
+        let cell;
+        switch(code){
+          case 1: cell = new Square(opts); break;
+          case 2: cell = new Triangle(opts); break;
+          case 3: cell = new Circle(opts); break;
+          default: cell = new Cell(opts); break;
+        }
+
+        if (current){
+          this.current = cell;
+        }
+        else if (target){
+          this.target = cell;
+        }
+
+        this.cells.push(cell);
       }
     }
 
   }
 
-  onFrame(e) {
-    this.cells.forEach( c => c.onFrame(e) );
+  calculateMoves() {
+    this.cells.forEach( c => {
+      let cPos = this.current.position;
+      if (c.position.x === cPos.x && c.position.y === cPos.y){
+        c.canMove = false;
+        return;
+      }
+
+      c.canMove = this.current.canMoveTo(c.position);
+    });
+
   }
 
 }
