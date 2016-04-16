@@ -1,4 +1,9 @@
-import Cell from './Cell';
+import {
+  Cell,
+  Square,
+  Triangle,
+  Circle
+} from './Cell';
 
 export default class Grid {
 
@@ -7,7 +12,12 @@ export default class Grid {
     this.bounds = bounds;
 
     this.cells = [];
+    this.current = null;
+    this.target = null;
+
     this._generate();
+
+    this.calculateMoves();
   }
 
   _generate(){
@@ -29,24 +39,66 @@ export default class Grid {
           code = +(code / 100).toString().split('.')[1];
         }
 
-        this.cells.push(new Cell({
+        let opts = {
+          position: { x: i, y: j},
           attrs: {
             x: ctn.left + i * wCell,
             y: ctn.top + j * hCell,
             w: wCell,
             h: hCell
           },
-          code,
-          target,
-          current
-        }));
+          code
+        };
+
+        let cell;
+        switch(code){
+          case 1: cell = new Square(opts); break;
+          case 2: cell = new Triangle(opts); break;
+          case 3: cell = new Circle(opts); break;
+          default: cell = new Cell(opts); break;
+        }
+
+        cell.onMove = this.onMoveTo.bind(this, cell);
+
+        if (current){
+          cell.setCurrent();
+          this.current = cell;
+        }
+        else if (target){
+          cell.setTarget();
+          this.target = cell;
+        }
+
+        this.cells.push(cell);
       }
     }
 
   }
 
-  onFrame(e) {
-    this.cells.forEach( c => c.onFrame(e) );
+  calculateMoves() {
+    this.cells.forEach( c => {
+      if (c.id === this.current.id){
+        c.canMove = false;
+        return;
+      }
+
+      c.canMove = this.current.canMoveTo(c.position);
+    });
+  }
+
+  onMoveTo(cell){
+    this.current.canMove = false;
+    this.current.unsetCurrent();
+
+    if (cell.id === this.target.id){
+      window.alert("You Win!");
+      window.location.reload();
+    }
+
+    this.current = cell;
+    this.current.setCurrent();
+
+    this.calculateMoves();
   }
 
 }

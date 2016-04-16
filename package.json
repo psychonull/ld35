@@ -7,7 +7,8 @@
     "copy": "grunt copydist"
   },
   "dependencies": {
-    "paper": "^0.9.25"
+    "paper": "^0.9.25",
+    "shortid": "^2.2.6"
   },
   "devDependencies": {
     "babel": "^6.5.2",
