@@ -1,0 +1,15 @@
+default:
+  - 'sass:app'
+  - 'browserify:app'
+
+w:
+  - 'browserify:watch'
+  - 'connect:app'
+  - 'watch:app'
+
+copydist:
+  - 'sass'
+  - 'browserify'
+  - 'uglify:all'
+  - 'cssmin:all'
+  - 'copy:dist'
