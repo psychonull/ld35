@@ -66,6 +66,19 @@ export default class Cell {
 
   }
 
+  _getSteps(from, to, max){
+    let move =  {
+      x: Math.abs(from.x - to.x),
+      y: Math.abs(from.y - to.y)
+    };
+
+    if (max){
+      return Math.max(move.x, move.y);
+    }
+
+    return move;
+  }
+
   setCurrent(){
     this.rect.style.strokeColor = 'white';
   }
