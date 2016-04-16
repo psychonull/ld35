@@ -21,6 +21,12 @@ module.exports = {
     dest: "dist/<%= pkg.name %>.js"
   },
 
+  editor: {
+    options: Object.assign({}, options, { watch: true }),
+    src: ["src/editor.js"],
+    dest: "dist/editor.js"
+  },
+
   watch: {
     options: Object.assign({}, options, { watch: true }),
     src: ["src/index.js"],
