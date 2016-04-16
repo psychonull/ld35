@@ -40,7 +40,7 @@ export default class Grid {
         }
 
         let opts = {
-          position: { x: j, y: i},
+          position: { x: i, y: j},
           attrs: {
             x: ctn.left + i * wCell,
             y: ctn.top + j * hCell,
