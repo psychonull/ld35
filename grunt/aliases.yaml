@@ -7,6 +7,11 @@ w:
   - 'connect:app'
   - 'watch:app'
 
+editor:
+  - 'browserify:editor'
+  - 'connect:app'
+  - 'watch:app'
+
 copydist:
   - 'sass'
   - 'browserify'
