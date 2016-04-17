@@ -26,6 +26,13 @@ export default class Game {
     view.draw();
   }
 
+  startCustomLevel(levelData){
+    this.clear();
+    this.grid = new Grid(this.store, levelData, view.bounds,
+      () => window.alert('Custom level ok!'));
+    this.store.dispatch(loadLevel(levelData, 'Custom'));
+  }
+
   clear(){
     project.activeLayer.removeChildren();
   }

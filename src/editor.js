@@ -1,4 +1,5 @@
 // dirty editor for ld35
+import qs from 'qs';
 
 let $ = window.$;
 let state = {
@@ -28,7 +29,9 @@ $(document).on('ready', () => {
 
   $('#export').on('click', function(e){
     e.preventDefault();
-    $('#export-text').val(getLevelFromState(state));
+    let level = getLevelFromState(state);
+    $('#export-text').val(level);
+    $('#test-link').attr('href', `/#${qs.stringify({levelData: level})}`);
     $('#export-modal').modal('show');
   });
 

@@ -26,6 +26,10 @@ window.onload = function() {
     document.getElementById('container').classList.remove('hidden');
     game.start(parseInt(startingOptions.level) - 1);
   }
+  else if(startingOptions.levelData){
+    document.getElementById('container').classList.remove('hidden');
+    game.startCustomLevel(JSON.parse(startingOptions.levelData));
+  }
   else {
     let p = new Popup('main-menu');
     p.show(<MainMenu game={game} onClose={() => p.hide()} />);
