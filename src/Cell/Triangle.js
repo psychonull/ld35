@@ -10,10 +10,12 @@ export default class Triangle extends Cell {
   }
 
   getShape(){
+    let pos = this.rect.bounds.center.clone();
+    pos.y += 5;
     return {
-      center: this.rect.bounds.center.clone(),
+      center: pos,
       points: 3,
-      radius: this.rect.bounds.height / 3,
+      radius: this.rect.bounds.height / 4,
       color: this.color
     };
   }

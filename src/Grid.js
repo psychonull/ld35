@@ -138,7 +138,7 @@ export default class Grid {
     if(!this.maxMoves){
       return false;
     }
-    let currentMoves = this.store.getState().gameState.moves
+    let currentMoves = this.store.getState().gameState.moves;
     if( currentMoves === this.maxMoves ){
       return true;
     }
