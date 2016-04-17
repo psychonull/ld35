@@ -98,8 +98,13 @@ export default class Grid {
 
     if (cell.id === this.target.id){
       window.alert("You Win!");
+      if(this.level == this.levels.length -1){
+        window.alert("There are no more levels! starting again...");
+        window.location.reload();
+        return;
+      }
+      project.activeLayer.removeChildren();
       let grid = new Grid(this.levels[++this.level], view.bounds, this.level, this.levels);
-      view.update();
       view.draw();
       //window.location.reload();
     }
