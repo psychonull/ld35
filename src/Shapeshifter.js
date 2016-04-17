@@ -1,4 +1,6 @@
 
+import Particles from './Particles';
+
 const handleLenRate = 2.4;
 
 export default class Shapeshifter {
@@ -66,8 +68,8 @@ export default class Shapeshifter {
     this.baseScaling = this.current.scaling.clone();
   }
 
-  getRandom(from, to){
-    return Math.floor(Math.random() * 8) + 3;
+  destroy() {
+    this.state = 'destroy';
   }
 
   onFrame(e) {
@@ -88,6 +90,18 @@ export default class Shapeshifter {
 
         sinus = Math.sin(e.time * 3 + 0.4) * 0.3;
         this.current.fillColor.brightness = sinus + 0.8;
+        break;
+      }
+
+      case 'destroy': {
+        Particles.fire({
+          position: this.current.bounds.center,
+          radius: this.radius / 5,
+          amount: 30,
+          color: this.color
+        });
+        this.current.visible = false;
+        this.state = null;
         break;
       }
 

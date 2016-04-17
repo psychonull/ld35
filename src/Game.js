@@ -3,6 +3,7 @@ import Grid from './Grid';
 import levels from './levels';
 import { loadLevel } from './actions/gameStateActions.js';
 import { EventEmitter } from 'events';
+import Particles from './Particles';
 
 export default class Game extends EventEmitter {
 
@@ -66,6 +67,8 @@ export default class Game extends EventEmitter {
     if (this.grid){
       this.grid.onFrame(e);
     }
+
+    Particles.onFrame(e);
 
     //console.dir(e);
     //e.delta
