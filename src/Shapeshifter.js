@@ -153,7 +153,10 @@ export default class Shapeshifter {
           this.generateConnections(this.circlePaths);
         }
 
-        if (vector.length < 5) {
+        let isInBox = this.circleMove.position.isInside(
+          this.nextCell.getCollisionBounds());
+
+        if (isInBox){
           this.current.remove();
           this.current = null;
           this.connections.children = [];

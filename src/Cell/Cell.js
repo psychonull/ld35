@@ -112,6 +112,10 @@ export default class Cell {
     };
   }
 
+  getCollisionBounds() {
+    return this.rect.bounds.clone().scale(0.25, 0.25);
+  }
+
   getCenter(){
     return this._group.bounds.center;
   }
