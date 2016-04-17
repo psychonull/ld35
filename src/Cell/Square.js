@@ -5,9 +5,9 @@ export default class Square extends Cell {
 
   canMoveTo(to){
     let p = this.position;
-    return (this._getSteps(this.position, to, true) > this.maxMoves ? false : true) &&
-      (p.x === to.x && p.y !== to.y) ||
-      (p.y === to.y && p.x !== to.x);
+    return (!this.maxMoves || (this._getSteps(this.position, to, true) > this.maxMoves ? false : true)) &&
+      ((p.x === to.x && p.y !== to.y) ||
+      (p.y === to.y && p.x !== to.x));
   }
 
   generateShape(){

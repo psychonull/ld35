@@ -7,10 +7,12 @@ import {
 
 export default class Grid {
 
-  constructor(cfg, bounds){
+  constructor(cfg, bounds, level, levels){
     this.cfg = cfg;
     this.bounds = bounds;
     this.maxMoves = cfg.maxMoves;
+    this.level = level;
+    this.levels = levels;
 
     this.cells = [];
     this.current = null;
@@ -96,7 +98,10 @@ export default class Grid {
 
     if (cell.id === this.target.id){
       window.alert("You Win!");
-      window.location.reload();
+      let grid = new Grid(this.levels[++this.level], view.bounds, this.level, this.levels);
+      view.update();
+      view.draw();
+      //window.location.reload();
     }
 
     this.current = cell;

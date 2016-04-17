@@ -10,7 +10,7 @@ export default class Game {
 
   start(lvlIdx){
     this.clear();
-    this.grid = new Grid(levels[lvlIdx], view.bounds);
+    this.grid = new Grid(levels[lvlIdx], view.bounds, lvlIdx, levels);
     view.draw();
   }
 

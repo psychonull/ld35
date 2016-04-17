@@ -15,7 +15,7 @@ window.onload = function() {
   let game = new Game();
 
   // move this into a menu (param is level index)
-  game.start(4);
+  game.start(0);
   window.React = React; //HACK: React is undefined error?
   const store = configureStore();
   ReactDOM.render(
