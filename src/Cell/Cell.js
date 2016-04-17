@@ -10,6 +10,7 @@ export default class Cell {
   constructor(options){
     Object.assign(this, options);
     this.id = getId();
+    this.maxMoves = options.maxMoves;
 
     this.canMove = false;
     this.isActive = false;

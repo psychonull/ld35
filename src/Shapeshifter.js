@@ -53,7 +53,7 @@ export default class Shapeshifter {
       let vector = this.destination.subtract(this._group.position);
       this._group.position = this._group.position.add(vector.divide(30));
 
-      if (vector.length < 1) {
+      if (vector.length < 6) {
         this.clearMove();
         this.setShape();
 

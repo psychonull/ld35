@@ -9,9 +9,11 @@ import Shapeshifter from './Shapeshifter';
 
 export default class Grid {
 
-  constructor(cfg, bounds, onFrame){
+  constructor(cfg, bounds, onWin){
     this.cfg = cfg;
     this.bounds = bounds;
+    this.maxMoves = cfg.maxMoves;
+    this.onWin = onWin;
 
     this.cells = [];
     this.current = null;
@@ -20,8 +22,7 @@ export default class Grid {
     this._generate();
 
     this.shape = new Shapeshifter({
-      onArrived: cell => this.onShapeArrived(cell),
-      onFrame
+      onArrived: cell => this.onShapeArrived(cell)
     });
 
     this.shape.setCell(this.current);
@@ -56,7 +57,8 @@ export default class Grid {
             w: wCell,
             h: hCell
           },
-          code
+          code,
+          maxMoves: this.maxMoves
         };
 
         let cell;
@@ -91,7 +93,7 @@ export default class Grid {
       else {
         c.canMove = this.current.canMoveTo(c.position);
       }
-      
+
       c.updateDisbled();
     });
   }
@@ -109,8 +111,8 @@ export default class Grid {
     this.current.unsetCurrent();
 
     if (cell.id === this.target.id){
-      window.alert("You Win!");
-      window.location.reload();
+      this.onWin();
+      return;
     }
 
     this.current = cell;
