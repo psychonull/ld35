@@ -39,6 +39,10 @@ export default class Game {
     this.start(this.level + 1);
   }
 
+  onRestartLevel(){
+    this.start(this.level);
+  }
+
   onFrame(/*e*/) {
     // View Main onFrame
 

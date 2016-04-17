@@ -3,7 +3,7 @@ import { PropTypes } from 'react';
 const Buttons = (props) => {
   return (
     <div>
-      <button>Restart level</button>
+      <button onClick={() => props.game.onRestartLevel()}>Restart level</button>
       <button>Level selection</button>
       <button onClick={() => props.actions.toggleSound()}>
       { props.sound ? 'SOUND OFF' : 'SOUND ON' }
@@ -14,6 +14,8 @@ const Buttons = (props) => {
 };
 
 Buttons.propTypes = {
+  actions: PropTypes.object.isRequired,
+  game: PropTypes.object.isRequired,
   sound: PropTypes.bool.isRequired
 };
 

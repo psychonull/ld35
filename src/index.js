@@ -21,7 +21,7 @@ window.onload = function() {
   window.React = React; //HACK: React is undefined error?
   ReactDOM.render(
     <Provider store={store}>
-      <GameState/>
+      <GameState game={game}/>
     </Provider>,
     document.getElementById('game-hud'));
 };

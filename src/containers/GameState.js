@@ -8,17 +8,18 @@ import * as GameStateActions from '../actions/gameStateActions.js';
 
 class App extends React.Component {
   render() {
-    const { gameState, actions } = this.props;
+    const { gameState, actions, game } = this.props;
 
     return (
-        <HUD gameState={gameState} actions={actions} />
+        <HUD gameState={gameState} actions={actions} game={game} />
     );
   }
 }
 
 App.propTypes = {
   actions: PropTypes.object.isRequired,
-  gameState: PropTypes.object.isRequired
+  gameState: PropTypes.object.isRequired,
+  game: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
