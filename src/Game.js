@@ -4,16 +4,18 @@ import levels from './levels';
 
 export default class Game {
 
-  constructor(){
+  constructor(store){
     view.onFrame = e => this.onFrame(e);
+
     this.level = 0;
+    this.store = store;
   }
 
   start(lvlIdx){
     this.clear();
     this.level = lvlIdx;
 
-    this.grid = new Grid(levels[lvlIdx], view.bounds,
+    this.grid = new Grid(this.store, levels[lvlIdx], view.bounds,
       () => this.onWinLevel());
 
     view.draw();

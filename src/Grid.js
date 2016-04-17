@@ -4,15 +4,17 @@ import {
   Triangle,
   Circle
 } from './Cell';
+import { addMove, loadLevel } from './actions/gameStateActions.js';
 
 import Shapeshifter from './Shapeshifter';
 
 export default class Grid {
 
-  constructor(cfg, bounds, onWin){
+  constructor(store, cfg, bounds, onWin){
+    this.store = store;
     this.cfg = cfg;
     this.bounds = bounds;
-    this.maxMoves = cfg.maxMoves;
+    this.maxMoves = this.cfg.maxMoves;
     this.onWin = onWin;
 
     this.cells = [];
@@ -20,6 +22,7 @@ export default class Grid {
     this.target = null;
 
     this._generate();
+    this.store.dispatch(loadLevel(this.cfg));
 
     this.shape = new Shapeshifter({
       onArrived: cell => this.onShapeArrived(cell)
@@ -119,6 +122,8 @@ export default class Grid {
     this.current.setCurrent();
 
     this.calculateMoves();
+
+    this.store.dispatch(addMove());
   }
 
 }

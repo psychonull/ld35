@@ -12,12 +12,12 @@ paper.install(window);
 window.onload = function() {
   paper.setup('game-viewport');
 
-  let game = new Game();
+  const store = configureStore();
+  let game = new Game(store);
 
   // move this into a menu (param is level index)
   game.start(0);
   window.React = React; //HACK: React is undefined error?
-  const store = configureStore();
   ReactDOM.render(
     <Provider store={store}>
       <GameState/>
