@@ -14,6 +14,8 @@ export default class Game extends EventEmitter {
     this.store = store;
     this.options = options;
     this.store.subscribe(() => this.onChangeStore());
+    this.container = document.getElementById('game-container');
+    this.container.addEventListener('click', () => this.onContainerClick());
   }
 
   start(lvlIdx, options){
@@ -73,6 +75,12 @@ export default class Game extends EventEmitter {
     if(this.options.sound !== newSoundOption ){
       this.emit(newSoundOption ? 'sound:unmute' : 'sound:mute');
       this.options.sound = newSoundOption;
+    }
+  }
+
+  onContainerClick(){
+    if(this.grid.lost){
+      this.onRestartLevel();
     }
   }
 

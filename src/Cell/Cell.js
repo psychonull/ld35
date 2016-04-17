@@ -147,4 +147,8 @@ export default class Cell {
     }
   }
 
+  hide(){
+    this.rect.visible = false;
+  }
+
 }

@@ -16,6 +16,7 @@ export default class Grid {
     this.bounds = bounds;
     this.maxMoves = this.cfg.maxMoves;
     this.onWin = onWin;
+    this.lost = false;
 
     this.cells = [];
     this.current = null;
@@ -121,6 +122,31 @@ export default class Grid {
     this.calculateMoves();
 
     this.store.dispatch(addMove());
+
+    if(this.isLevelLost()){
+      this.onLevelLost();
+    }
+  }
+
+  // check if won before calling this
+  isLevelLost(){
+    if(!this.maxMoves){
+      return false;
+    }
+    let currentMoves = this.store.getState().gameState.moves
+    if( currentMoves === this.maxMoves ){
+      return true;
+    }
+    return false;
+  }
+
+  onLevelLost(){
+    this.lost = true;
+    this.cells.forEach((c) => {
+      if(c.id !== this.current.id){
+        c.hide();
+      }
+    });
   }
 
 }
