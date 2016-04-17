@@ -9,6 +9,7 @@ import configureStore from './store/configureStore';
 import MainMenu from './components/MainMenu.js';
 import Popup from './Popup.js';
 import qs from 'qs';
+import { register as registerSoundManager } from './sounds/Manager.js';
 
 window.React = React; //HACK: React is undefined error?
 
@@ -21,6 +22,8 @@ window.onload = function() {
   const store = configureStore();
   let startingOptions = qs.parse(location.hash.substr(1));
   let game = new Game(store, startingOptions);
+
+  registerSoundManager(game);
 
   if(startingOptions.level){
     document.getElementById('container').classList.remove('hidden');

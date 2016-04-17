@@ -7,6 +7,7 @@
     "copy": "grunt copydist"
   },
   "dependencies": {
+    "howler": "^1.1.29",
     "paper": "^0.9.25",
     "qs": "^6.1.0",
     "react": "^15.0.1",

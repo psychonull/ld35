@@ -2,18 +2,24 @@
 import Grid from './Grid';
 import levels from './levels';
 import { loadLevel } from './actions/gameStateActions.js';
+import { EventEmitter } from 'events';
 
-export default class Game {
+export default class Game extends EventEmitter {
 
   constructor(store, options){
+    super();
     view.onFrame = e => this.onFrame(e);
 
     this.level = 0;
     this.store = store;
     this.options = options;
+    this.store.subscribe(() => this.onChangeStore());
   }
 
   start(lvlIdx, options){
+    if(lvlIdx === 0 && options){ //hack
+      this.emit('game:start');
+    }
     this.clear();
     this.level = lvlIdx;
     this.options = Object.assign({}, this.options, options);
@@ -38,6 +44,7 @@ export default class Game {
   }
 
   onWinLevel(){
+    this.emit('level:win', this.level);
     window.alert("You Win!");
     if(this.level == levels.length -1){
       window.alert("There are no more levels! starting again...");
@@ -59,6 +66,14 @@ export default class Game {
     //e.delta
     //e.time
     //e.count
+  }
+
+  onChangeStore(){
+    let newSoundOption = this.store.getState().gameState.sound;
+    if(this.options.sound !== newSoundOption ){
+      this.emit(newSoundOption ? 'sound:unmute' : 'sound:mute');
+      this.options.sound = newSoundOption;
+    }
   }
 
 }
