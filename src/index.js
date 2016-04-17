@@ -6,6 +6,10 @@ import { Provider } from 'react-redux';
 import GameState from './containers/GameState.js';
 import React from 'react';
 import configureStore from './store/configureStore';
+import MainMenu from './components/MainMenu.js';
+import Popup from './Popup.js';
+
+window.React = React; //HACK: React is undefined error?
 
 paper.install(window);
 window.paper = paper;
@@ -16,9 +20,9 @@ window.onload = function() {
   const store = configureStore();
   let game = new Game(store);
 
-  // move this into a menu (param is level index)
-  game.start(0);
-  window.React = React; //HACK: React is undefined error?
+  let p = new Popup('main-menu');
+  p.show(<MainMenu game={game} onClose={() => p.hide()} />);
+
   ReactDOM.render(
     <Provider store={store}>
       <GameState game={game}/>

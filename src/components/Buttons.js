@@ -1,6 +1,5 @@
 import { PropTypes } from 'react';
 import levels from '../levels.js';
-import ReactDOM from 'react-dom';
 import LevelSelection from './LevelSelection.js';
 import Popup from '../Popup.js';
 
@@ -13,16 +12,13 @@ const showLevelSelection = (game) => {
     };
   });
   let popup = new Popup('level-selection');
-  ReactDOM.render(
-    <LevelSelection levels={currentLevels}
-      onLevelSelect={(lvlIdx) => {
-        game.start(lvlIdx);
-        popup.hide();
-      }}
-      onCancel={() => popup.hide()}
-    />,
-    document.getElementById('level-selection'));
-  popup.show(null, { timeout: false, skippable: false });
+  popup.show(<LevelSelection levels={currentLevels}
+    onLevelSelect={(lvlIdx) => {
+      game.start(lvlIdx);
+      popup.hide();
+    }}
+    onCancel={() => popup.hide()}
+  />, { timeout: false, skippable: false });
 };
 
 const Buttons = (props) => {

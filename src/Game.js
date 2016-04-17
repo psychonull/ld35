@@ -12,9 +12,10 @@ export default class Game {
     this.store = store;
   }
 
-  start(lvlIdx){
+  start(lvlIdx, options){
     this.clear();
     this.level = lvlIdx;
+    this.options = options;
 
     this.grid = new Grid(this.store, levels[lvlIdx], view.bounds,
       () => this.onWinLevel());

@@ -1,8 +1,8 @@
-
+import ReactDOM from 'react-dom';
 const defaults = {
-  timeout: 5000,
+  timeout: false,
   raw: false,
-  skippable: true
+  skippable: false
 };
 
 export default class Popup {
@@ -18,7 +18,12 @@ export default class Popup {
   show(content, options){
     let opt = Object.assign({}, defaults, options);
     if(content){
-      this.container.innerHTML = opt.raw ? content : `<h1>${content}</h1>`;
+      if(typeof content === 'object'){
+        ReactDOM.render(content, this.container);
+      }
+      else {
+        this.container.innerHTML = opt.raw ? content : `<h1>${content}</h1>`;
+      }
     }
     this.container.classList.add('open');
     if(opt.timeout){
