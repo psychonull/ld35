@@ -8,17 +8,20 @@ import { addMove, loadLevel } from './actions/gameStateActions.js';
 
 export default class Grid {
 
-  constructor(cfg, bounds, store){
-    this.cfg = cfg;
-    this.bounds = bounds;
+  constructor(store, bounds, level, levels){
     this.store = store;
+    this.cfg = levels[level];
+    this.bounds = bounds;
+    this.maxMoves = this.cfg.maxMoves;
+    this.level = level;
+    this.levels = levels;
 
     this.cells = [];
     this.current = null;
     this.target = null;
 
     this._generate();
-    this.store.dispatch(loadLevel(cfg));
+    this.store.dispatch(loadLevel(this.cfg));
 
     this.calculateMoves();
   }
@@ -52,7 +55,8 @@ export default class Grid {
             w: wCell,
             h: hCell
           },
-          code
+          code,
+          maxMoves: this.maxMoves
         };
 
         let cell;
@@ -97,7 +101,15 @@ export default class Grid {
 
     if (cell.id === this.target.id){
       window.alert("You Win!");
-      window.location.reload();
+      if(this.level == this.levels.length -1){
+        window.alert("There are no more levels! starting again...");
+        window.location.reload();
+        return;
+      }
+      project.activeLayer.removeChildren();
+      let grid = new Grid(this.store, view.bounds, this.level + 1, this.levels);
+      view.draw();
+      //window.location.reload();
     }
 
     this.current = cell;
