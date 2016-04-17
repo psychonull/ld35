@@ -11,15 +11,10 @@ export default class Square extends Cell {
   }
 
   getShape(){
-    let sizeW = this.rect.bounds.width / 2;
-    let sizeH = this.rect.bounds.height / 2;
-    let x = this.rect.bounds.topLeft.x + (sizeW/2);
-    let y = this.rect.bounds.topLeft.y + (sizeH/2);
-
     return {
       center: this.rect.bounds.center.clone(),
       points: 4,
-      radius: sizeH/2,
+      radius: this.rect.bounds.height/4,
       color: this.color
     };
   }
