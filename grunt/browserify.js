@@ -8,7 +8,7 @@ var options = {
   extension: [ ".js" ],
   transform: [
     [ "babelify", {
-      presets: ["es2015", "stage-0"],
+      presets: ["es2015", "stage-0", "react"],
       plugins: ["add-module-exports", "transform-runtime"]
     }]
   ]
