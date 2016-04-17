@@ -10,7 +10,7 @@ export default class Circle extends Cell {
 
   getShape(){
     let shape = new Path.RegularPolygon(
-      new Point(0,0), 10, this.rect.bounds.width / 3);
+      this.rect.bounds.center.clone(), 10, this.rect.bounds.height / 3.5);
 
     shape.fillColor = this.color;
 

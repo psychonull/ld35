@@ -10,7 +10,9 @@ body {
   canvas {
     display: block;
     margin: auto;
-    padding-top: 20px;
+    border: solid 7px #175081;
+    border-radius: 20px;
+    box-shadow: 0px 0px 150px rgb(29, 74, 113);
   }
 }
 

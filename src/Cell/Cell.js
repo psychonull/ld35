@@ -37,30 +37,12 @@ export default class Cell {
       fillColor: 'transparent',
       strokeColor: this.color,
       strokeWidth: 5
-      //shadowColor: colorMap[this.code],
-      //shadowBlur: 6,
-      //shadowOffset: new Point(0, 0)
     };
 
     this.rect.scale(0.95);
-
     this.rect.onFrame = e => this.onFrame(e);
 
-/*
-    //DEBUG
-    let text = new PointText(this.rect.bounds.center);
-    text.content = this.code;
-    text.style = {
-      fontFamily: 'Courier New',
-      fontWeight: 'bold',
-      fontSize: 12,
-      fillColor: 'white',
-      justification: 'center'
-    };
-*/
-
     this._group = new Group();
-    this._group.transformContent = false;
     this._group.addChild(this.rect);
 
     this._group.onMouseEnter = () => {

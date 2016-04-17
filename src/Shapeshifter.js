@@ -1,13 +1,7 @@
 
-//import animatePaper from 'paper-animate';
-
 export default class Shapeshifter {
 
   constructor(options){
-    this._group = new Group();
-    this._group.transformContent = false;
-    this._group.onFrame = e => this.onFrame(e);
-
     this.currentCell = null;
     this.nextCell = null;
     this.destination = null;
@@ -27,24 +21,6 @@ export default class Shapeshifter {
   moveTo(cell){
     this.nextCell = cell;
     this.destination = this.nextCell.getCenter();
-/*
-    animatePaper.animate(this._group, {
-      properties: {
-        position: this.destination,
-        //translate: this.destination,
-        //scale: 3
-      },
-      settings: {
-        duration: 400,
-        easing: "linear",
-        complete: () => {
-          this.clearMove();
-          this.setShape();
-          this.onArrived(this.currentCell);
-        }
-      }
-    });
-*/
   }
 
   isMoving(){
@@ -57,30 +33,39 @@ export default class Shapeshifter {
     this.destination = null;
   }
 
-  setShape(first) {
-    this._group.removeChildren();
+  setShape() {
+    if (this._group){
+      this._group.removeChildren();
+      this._group.remove();
+    }
 
     let shape = this.currentCell.getShape();
-    shape.position = this._group.position.clone();
-    if (first){
-      this._group.position = this.currentCell.getCenter();
-    }
-    this._group.addChild(shape);
+    this._group = new Group(shape);
+    this._group.onFrame = e => this.onFrame(e);
   }
 
-  onFrame() {
+  onFrame(e) {
+
     if (this.destination){
       let vector = this.destination.subtract(this._group.position);
-      this._group.position = this._group.position.add(vector.divide(30));
-      this._group.children[0].rotate(10);
+      this._group.position = this._group.position.add(vector.divide(vector.length * 0.3));
+      this._group.rotate(25);
 
-      if (vector.length < 6) {
+      // animate color
+      let from = this._group.children[0].fillColor.convert('rgb');
+      let to = this.nextCell.color.convert('rgb');
+
+      this._group.children[0].fillColor =
+        ((to.subtract(from)).multiply(e.delta)).add(from);
+
+      if (vector.length < 10) {
         this.clearMove();
         this.setShape();
 
         this.onArrived(this.currentCell);
       }
     }
+
   }
 
 }

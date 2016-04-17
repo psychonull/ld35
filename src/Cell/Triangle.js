@@ -11,7 +11,7 @@ export default class Triangle extends Cell {
 
   getShape(){
     let shape = new Path.RegularPolygon(
-      new Point(0,0), 3, this.rect.bounds.width / 3);
+      this.rect.bounds.center.clone(), 3, this.rect.bounds.height / 3);
 
     shape.fillColor = this.color;
 
