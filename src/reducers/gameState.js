@@ -10,7 +10,8 @@ const initialState = {
   levelNumber: 1,
   moves: 0,
   maxMoves: false,
-  sound: true
+  sound: true,
+  maxLevel: 1
 };
 
 export default function gameState(state = initialState, action) {
@@ -23,7 +24,9 @@ export default function gameState(state = initialState, action) {
     case TOGGLE_SOUND:
       return Object.assign({}, state, {sound: !state.sound});
     case LOAD_LEVEL:
-      return Object.assign({}, state, {moves: 0, maxMoves: action.levelData.maxMoves, levelNumber: action.levelNumber});
+      return Object.assign({}, state, {
+        moves: 0, maxMoves: action.levelData.maxMoves,
+        levelNumber: action.levelNumber, maxLevel: Math.max(action.levelNumber, state.maxLevel)});
 		default:
 			return state;
 	}

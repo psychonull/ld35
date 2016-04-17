@@ -17,7 +17,9 @@ export default class Popup {
 
   show(content, options){
     let opt = Object.assign({}, defaults, options);
-    this.container.innerHTML = opt.raw ? content : `<h1>${content}</h1>`;
+    if(content){
+      this.container.innerHTML = opt.raw ? content : `<h1>${content}</h1>`;
+    }
     this.container.classList.add('open');
     if(opt.timeout){
       this.timer = window.setTimeout(() => this.hide(), opt.timeout);
