@@ -5,7 +5,9 @@ const LevelStats = (props) => {
     <div>
       <div className="level-number">Level { props.levelNumber }</div>
       <div className="moves">Moves: { props.moves }</div>
-      <div className="max-moves">Max. Moves: { props.maxMoves }</div>
+      { props.maxMoves &&
+        <div className="max-moves">Max. Moves: { props.maxMoves }</div>
+      }
     </div>
   );
 };

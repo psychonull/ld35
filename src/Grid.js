@@ -4,7 +4,7 @@ import {
   Triangle,
   Circle
 } from './Cell';
-import { addMove } from './actions/gameStateActions.js';
+import { addMove, loadLevel } from './actions/gameStateActions.js';
 
 export default class Grid {
 
@@ -18,6 +18,7 @@ export default class Grid {
     this.target = null;
 
     this._generate();
+    this.store.dispatch(loadLevel(cfg));
 
     this.calculateMoves();
   }

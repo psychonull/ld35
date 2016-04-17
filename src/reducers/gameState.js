@@ -1,7 +1,8 @@
 import {
   TOGGLE_SOUND,
   ADD_MOVE,
-  RESET_MOVES
+  RESET_MOVES,
+  LOAD_LEVEL
 } from '../constants/ActionTypes';
 
 const initialState = {
@@ -19,6 +20,8 @@ export default function gameState(state = initialState, action) {
       return Object.assign({}, state, {moves: 0});
     case TOGGLE_SOUND:
       return Object.assign({}, state, {sound: !state.sound});
+    case LOAD_LEVEL:
+      return Object.assign({}, state, {moves: 0, maxMoves: action.levelData.maxMoves});
 		default:
 			return state;
 	}

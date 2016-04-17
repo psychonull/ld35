@@ -11,3 +11,7 @@ export function addMove(){
 export function resetMoves(){
   return { type: types.RESET_MOVES };
 }
+
+export function loadLevel(levelData){
+  return { type: types.LOAD_LEVEL, levelData };
+}
