@@ -9,22 +9,13 @@ export default class Square extends Cell {
       (p.y === to.y && p.x !== to.x);
   }
 
-  generateShape(){
-    super.generateShape();
-
-    if (this.isTarget){
-      return;
-    }
-
+  getShape(){
     let size = this.rect.bounds.width / 2;
-    let shape = new Path.Rectangle(new Size(size, size));
+    let shape = new Path.Rectangle(new Point(0,0), new Size(size, size));
 
-    shape.bounds.center = this.rect.bounds.center;
     shape.fillColor = this.color;
-    shape.rotate(45);
 
-    this.shape = shape;
-    this._group.addChild(shape);
+    return shape;
   }
 
   onFrame(e) {

@@ -5,9 +5,11 @@ import {
   Circle
 } from './Cell';
 
+import Shapeshifter from './Shapeshifter';
+
 export default class Grid {
 
-  constructor(cfg, bounds){
+  constructor(cfg, bounds, onFrame){
     this.cfg = cfg;
     this.bounds = bounds;
 
@@ -17,7 +19,12 @@ export default class Grid {
 
     this._generate();
 
-    this.calculateMoves();
+    this.shape = new Shapeshifter({
+      onArrived: cell => this.onShapeArrived(cell),
+      onFrame
+    });
+
+    this.shape.setCell(this.current);
   }
 
   _generate(){
@@ -74,21 +81,30 @@ export default class Grid {
         this.cells.push(cell);
       }
     }
-
   }
 
   calculateMoves() {
     this.cells.forEach( c => {
       if (c.id === this.current.id || c.code === 0){
         c.canMove = false;
-        return;
       }
-
-      c.canMove = this.current.canMoveTo(c.position);
+      else {
+        c.canMove = this.current.canMoveTo(c.position);
+      }
+      
+      c.updateDisbled();
     });
   }
 
   onMoveTo(cell){
+    if (this.shape.isMoving()){
+      return;
+    }
+
+    this.shape.moveTo(cell);
+  }
+
+  onShapeArrived(cell){
     this.current.canMove = false;
     this.current.unsetCurrent();
 

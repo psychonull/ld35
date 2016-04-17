@@ -3,6 +3,7 @@ import { generate as getId } from 'shortid';
 import colorMap from './colorMap';
 
 const targetColor = '#D4AF37';
+const disabledColor = '#808080';
 
 export default class Cell {
 
@@ -58,6 +59,7 @@ export default class Cell {
 */
 
     this._group = new Group();
+    this._group.transformContent = false;
     this._group.addChild(this.rect);
 
     this._group.onMouseEnter = () => {
@@ -79,7 +81,6 @@ export default class Cell {
       }
     };
 
-    this.generateShape();
   }
 
   _getSteps(from, to, max){
@@ -103,18 +104,21 @@ export default class Cell {
     }
 
     this.resetStyle();
-
-    this.rect.fillColor = this.color;
-    if (this.shape){
-      this.shape.fillColor = 'transparent';
-      this.shape.strokeColor = 'transparent';
-    }
   }
 
   unsetCurrent(){
     this.isActive = false;
     this.isHover = false;
     this.resetStyle();
+  }
+
+  updateDisbled(){
+    if (this.canMove && !this.isTarget){
+      this.rect.strokeColor = this.color;
+    }
+    else if (!this.isTarget && !this.isActive && this.code !== 0) {
+      this.rect.strokeColor = disabledColor;
+    }
   }
 
   resetStyle(){
@@ -124,31 +128,20 @@ export default class Cell {
 
     this.rect.fillColor = 'transparent';
     this.rect.strokeColor.hue = this.baseHUE;
-
-    if (this.shape){
-      this.shape.fillColor = this.color;
-      this.shape.strokeColor = this.color;
-      this.shape.fillColor.hue = this.baseHUE;
-
-      // TODO: How to set default angle again???
-      //this.shape.rotation = this.baseShapeRotation;
-    }
-
     this._group.scaling = 1;
+  }
+
+  getCenter(){
+    return this._group.bounds.center;
   }
 
   setTarget(){
     this.isTarget = true;
     this.rect.strokeColor = targetColor;
     this.rect.fillColor = targetColor;
-
-    if (this.shape){
-      this.shape.fillColor = targetColor;
-      this.shape.strokeColor = targetColor;
-    }
   }
 
-  generateShape(){
+  getShape(){
     // Draw nothing if is not overrided
   }
 
@@ -163,9 +156,8 @@ export default class Cell {
       this._group.scaling = sinus + 0.95;
     }
     else if (this.isHover) {
-      this.shape.rotate(3);
-      this.shape.fillColor.hue += 3;
-      this.rect.strokeColor.hue += 3;
+      // TODO animate on hover
+      //this.rect.strokeColor.hue += 3;
     }
   }
 
