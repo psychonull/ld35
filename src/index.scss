@@ -13,3 +13,33 @@ body {
     padding-top: 20px;
   }
 }
+
+.popup {
+  background-color: #000;
+  transition: opacity 1s, visibility 0s 1s;;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  visibility: hidden;
+  color: #fff;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.open {
+    opacity: 1;
+  	visibility: visible;
+  	transition: opacity 0.5s;
+  }
+
+  h1 {
+    // position: relative;
+    // margin: auto;
+    // top: 50%;
+  }
+
+}
