@@ -1,6 +1,7 @@
 
 import Grid from './Grid';
 import levels from './levels';
+import { loadLevel } from './actions/gameStateActions.js';
 
 export default class Game {
 
@@ -17,6 +18,8 @@ export default class Game {
 
     this.grid = new Grid(this.store, levels[lvlIdx], view.bounds,
       () => this.onWinLevel());
+
+    this.store.dispatch(loadLevel(levels[lvlIdx], lvlIdx));
 
     view.draw();
   }

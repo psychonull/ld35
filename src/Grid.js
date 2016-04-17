@@ -4,7 +4,7 @@ import {
   Triangle,
   Circle
 } from './Cell';
-import { addMove, loadLevel } from './actions/gameStateActions.js';
+import { addMove } from './actions/gameStateActions.js';
 
 import Shapeshifter from './Shapeshifter';
 
@@ -22,7 +22,6 @@ export default class Grid {
     this.target = null;
 
     this._generate();
-    this.store.dispatch(loadLevel(this.cfg));
 
     this.shape = new Shapeshifter({
       onArrived: cell => this.onShapeArrived(cell)
