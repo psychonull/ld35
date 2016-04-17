@@ -4,12 +4,14 @@ import {
   Triangle,
   Circle
 } from './Cell';
+import { addMove } from './actions/gameStateActions.js';
 
 export default class Grid {
 
-  constructor(cfg, bounds){
+  constructor(cfg, bounds, store){
     this.cfg = cfg;
     this.bounds = bounds;
+    this.store = store;
 
     this.cells = [];
     this.current = null;
@@ -101,6 +103,8 @@ export default class Grid {
     this.current.setCurrent();
 
     this.calculateMoves();
+
+    this.store.dispatch(addMove());
   }
 
 }
