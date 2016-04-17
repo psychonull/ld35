@@ -23,13 +23,15 @@ const showLevelSelection = (game) => {
 
 const Buttons = (props) => {
   return (
-    <div>
-      <button onClick={() => props.game.onRestartLevel()}>Restart level</button>
-      <button onClick={() => showLevelSelection(props.game)}>Level selection</button>
-      <button onClick={() => props.actions.toggleSound()}>
-      { props.sound ? 'SOUND OFF' : 'SOUND ON' }
-      </button>
-      <button>(?)</button>
+    <div className="buttons">
+      <a className="icon-cw" onClick={() => props.game.onRestartLevel()} title="Restart level"></a>
+      <a className="icon-shuffle"
+        onClick={() => showLevelSelection(props.game)} title="Select Level"></a>
+      <a className={ props.sound ? 'icon-volume-off' : 'icon-volume' }
+        onClick={() => props.actions.toggleSound()}
+        title={ props.sound ? 'SOUND OFF' : 'SOUND ON' }>
+      </a>
+      <a className="icon-help-circled" title="Help"></a>
     </div>
   );
 };

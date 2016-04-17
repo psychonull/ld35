@@ -1,0 +1,34 @@
+#level-selection {
+  font-family: $hud-font;
+  font-size: 1.5em;
+
+  ul {
+    list-style: none;
+    max-width: 600px;
+
+    li {
+
+      padding: 10px;
+      display: inline-block;
+      box-shadow: 1px 1px 5px rgba(50, 127, 194, 0.5),
+                  -1px -1px 5px rgba(50, 127, 194, 0.5);
+      border-radius: 4px;
+
+      .disabled {
+        color: gray;
+      }
+
+      a {
+        cursor: pointer;
+        transition: 0.5s all;
+        font-weight: bold;
+
+        &:hover {
+          text-shadow: -5px 0px 10px rgb(29, 74, 113),
+                        5px 0px 10px rgb(29, 74, 113) ;
+          color: lighten(rgb(29, 74, 113), 20%);
+        }
+      }
+    }
+  }
+}
