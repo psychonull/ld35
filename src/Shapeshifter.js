@@ -30,6 +30,7 @@ export default class Shapeshifter {
 
     // Fire event to initialize
     this.onArrived(this.currentCell);
+    this.state = 'idle';
   }
 
   moveTo(cell){
@@ -65,6 +66,10 @@ export default class Shapeshifter {
     this.baseScaling = this.current.scaling.clone();
   }
 
+  getRandom(from, to){
+    return Math.floor(Math.random() * 8) + 3;
+  }
+
   onFrame(e) {
     let scaleRate = e.delta*10;
     let scaleSize = 4;
@@ -74,6 +79,17 @@ export default class Shapeshifter {
     }
 
     switch(this.state){
+
+      case 'idle': {
+        let sinus = Math.sin(e.time * 2 + 0.5) * 0.05;
+
+        const rnd = () => Math.min(Math.max(Math.random(), 0.85), 0.95);
+        this.current.scaling = new Point(sinus + rnd(), sinus + rnd());
+
+        sinus = Math.sin(e.time * 3 + 0.4) * 0.3;
+        this.current.fillColor.brightness = sinus + 0.8;
+        break;
+      }
 
       case 'scale-down': {
         this.current.scaling = this.current.scaling.subtract(scaleRate);
@@ -138,12 +154,9 @@ export default class Shapeshifter {
         }
 
         if (vector.length < 5) {
-          //this.state = null;
           this.current.remove();
           this.current = null;
-          //this.circleMove.remove();
           this.connections.children = [];
-          //createCustomShape(destination, radius);
           this.state = 'scale-down-2';
         }
         break;
@@ -159,7 +172,6 @@ export default class Shapeshifter {
       }
 
       case 'to-shape-2': {
-        //createCustomShape(this.destination, radius);
         this.clearMove();
         this.setShape();
 
@@ -173,9 +185,9 @@ export default class Shapeshifter {
         this.current.scaling = this.current.scaling.add(scaleRate);
         if (this.current.scaling.length > this.baseScaling.length*(scaleSize/3)){
           this.current.scaling = this.baseScaling.clone();
-          this.state = null;
 
           this.onArrived(this.currentCell);
+          this.state = 'idle';
         }
         break;
       }
@@ -190,14 +202,6 @@ export default class Shapeshifter {
     ((to.subtract(from)).multiply(e.delta)).add(from);
 
 */
-  }
-
-  createCustomShape(center, radius){
-    let points = Math.floor(Math.random() * 8) + 3;
-    this.current = new Path.RegularPolygon(center, points, radius);
-    this.baseCenter = center;
-    this.baseRadius = radius;
-    this.baseScaling = this.current.scaling.clone();
   }
 
   generateConnections(paths) {

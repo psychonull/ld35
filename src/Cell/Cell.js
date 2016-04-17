@@ -130,9 +130,9 @@ export default class Cell {
   onFrame(e) {
     let sinus;
     if (this.isActive){
-      sinus = Math.sin(e.time * 2 + 0.5) * 0.05;
-      this._group.scaling = sinus + 0.95;
-      this.rect.strokeWidth = 5;
+      //sinus = Math.sin(e.time * 2 + 0.5) * 0.05;
+      //this._group.scaling = sinus + 0.95;
+      //this.rect.strokeWidth = 5;
     }
     else if(this.canMove){
       sinus = Math.sin(e.time * 5 + 0.4) * 0.3;
