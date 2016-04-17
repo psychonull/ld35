@@ -21,15 +21,15 @@ export default class Game extends EventEmitter {
     this.storyPopup = new Popup('popup');
   }
 
-  start(lvlIdx, options){
-    if(lvlIdx === 0 && options){ //hack
+  start(lvlIdx, options, isReset){
+    if(lvlIdx === 0 && !isReset){
       this.emit('game:start');
     }
     this.clear();
     this.level = lvlIdx;
     this.options = Object.assign({}, this.options, options);
 
-    if(this.options.isHistory){
+    if(this.options.isHistory && !isReset){
       this.showStory(lvlIdx + 1).then(() => this.createGridAndDraw(lvlIdx));
     }
     else {
@@ -73,7 +73,7 @@ export default class Game extends EventEmitter {
   }
 
   onRestartLevel(){
-    this.start(this.level);
+    this.start(this.level, {}, true);
   }
 
   onFrame(e) {
