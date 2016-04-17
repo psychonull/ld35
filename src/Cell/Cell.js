@@ -114,12 +114,12 @@ export default class Cell {
   }
 
   updateDisbled(){
-    if (this.canMove && !this.isTarget){
-      this.rect.strokeColor = this.color;
-    }
-    else if (!this.isTarget && !this.isActive && this.code !== 0) {
-      this.rect.strokeColor = disabledColor;
-    }
+    //if (this.canMove && !this.isTarget){
+    //  this.rect.strokeColor = this.color;
+    //}
+    //else if (!this.isTarget && !this.isActive && this.code !== 0) {
+    //  this.rect.strokeColor = disabledColor;
+    //}
   }
 
   resetStyle(){
@@ -152,13 +152,29 @@ export default class Cell {
   }
 
   onFrame(e) {
-    if (this.isActive || this.isTarget){
-      let sinus = Math.sin(e.time * 2 + 0.5) * 0.05;
+    let sinus;
+    if (this.isActive){
+      sinus = Math.sin(e.time * 2 + 0.5) * 0.05;
       this._group.scaling = sinus + 0.95;
+      this.rect.strokeWidth = 5;
     }
-    else if (this.isHover) {
-      // TODO animate on hover
-      //this.rect.strokeColor.hue += 3;
+    else if(this.canMove){
+      sinus = Math.sin(e.time * 5 + 0.4) * 0.3;
+      this.rect.strokeColor.brightness = sinus + 0.8;
+      this._group.scaling = 0.98;
+      this.rect.strokeWidth = 6;
+    }
+    else if (!this.isTarget && !this.active && this.code !== 0){
+      // TODO: make it animated
+      this.rect.strokeWidth = 5;
+      this.rect.strokeColor.brightness = 0.3;
+      this._group.scaling = 0.95;
+    }
+
+    if (this.isHover && !this.isTarget) {
+      this.rect.fillColor = this.color;
+      this.rect.fillColor.saturation = 0.8;
+      this.rect.fillColor.brightness = 0.2;
     }
   }
 
