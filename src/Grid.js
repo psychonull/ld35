@@ -10,6 +10,7 @@ export default class Grid {
   constructor(cfg, bounds){
     this.cfg = cfg;
     this.bounds = bounds;
+    this.maxMoves = cfg.maxMoves;
 
     this.cells = [];
     this.current = null;
@@ -49,7 +50,8 @@ export default class Grid {
             w: wCell,
             h: hCell
           },
-          code
+          code,
+          maxMoves: this.maxMoves
         };
 
         let cell;

@@ -5,7 +5,8 @@ export default class Triangle extends Cell {
 
   canMoveTo(to){
     let p = this.position;
-    return Math.abs(p.x - to.x) === Math.abs(p.y - to.y);
+    return (this._getSteps(this.position, to, true) > this.maxMoves ? false : true) &&
+      Math.abs(p.x - to.x) === Math.abs(p.y - to.y);
   }
 
   generateShape(){

@@ -10,5 +10,5 @@ window.onload = function() {
   let game = new Game();
 
   // move this into a menu (param is level index)
-  game.start(0);
+  game.start(4);
 };
