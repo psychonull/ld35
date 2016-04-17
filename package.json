@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "paper": "^0.9.25",
+    "paper-animate": "^0.10.2",
     "react": "^15.0.1",
     "react-dom": "^15.0.1",
     "react-redux": "^4.4.5",

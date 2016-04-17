@@ -1,4 +1,6 @@
 
+//import animatePaper from 'paper-animate';
+
 export default class Shapeshifter {
 
   constructor(options){
@@ -25,6 +27,24 @@ export default class Shapeshifter {
   moveTo(cell){
     this.nextCell = cell;
     this.destination = this.nextCell.getCenter();
+/*
+    animatePaper.animate(this._group, {
+      properties: {
+        position: this.destination,
+        //translate: this.destination,
+        //scale: 3
+      },
+      settings: {
+        duration: 400,
+        easing: "linear",
+        complete: () => {
+          this.clearMove();
+          this.setShape();
+          this.onArrived(this.currentCell);
+        }
+      }
+    });
+*/
   }
 
   isMoving(){
@@ -52,6 +72,7 @@ export default class Shapeshifter {
     if (this.destination){
       let vector = this.destination.subtract(this._group.position);
       this._group.position = this._group.position.add(vector.divide(30));
+      this._group.children[0].rotate(10);
 
       if (vector.length < 6) {
         this.clearMove();
@@ -60,7 +81,6 @@ export default class Shapeshifter {
         this.onArrived(this.currentCell);
       }
     }
-
   }
 
 }

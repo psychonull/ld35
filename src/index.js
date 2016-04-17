@@ -8,6 +8,7 @@ import React from 'react';
 import configureStore from './store/configureStore';
 
 paper.install(window);
+window.paper = paper;
 
 window.onload = function() {
   paper.setup('game-viewport');

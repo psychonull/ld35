@@ -113,15 +113,6 @@ export default class Cell {
     this.resetStyle();
   }
 
-  updateDisbled(){
-    //if (this.canMove && !this.isTarget){
-    //  this.rect.strokeColor = this.color;
-    //}
-    //else if (!this.isTarget && !this.isActive && this.code !== 0) {
-    //  this.rect.strokeColor = disabledColor;
-    //}
-  }
-
   resetStyle(){
     if (this.isTarget){
       return;
@@ -140,10 +131,6 @@ export default class Cell {
     this.isTarget = true;
     this.rect.strokeColor = targetColor;
     this.rect.fillColor = targetColor;
-  }
-
-  getShape(){
-    // Draw nothing if is not overrided
   }
 
   canMoveTo(/*position*/){

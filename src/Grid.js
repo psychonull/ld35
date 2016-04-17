@@ -96,8 +96,6 @@ export default class Grid {
       else {
         c.canMove = this.current.canMoveTo(c.position);
       }
-
-      c.updateDisbled();
     });
   }
 
