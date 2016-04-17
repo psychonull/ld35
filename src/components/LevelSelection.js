@@ -9,15 +9,15 @@ const LevelSelection = (props) => {
           return (
             <li key={level.number}>
               { isEnabled ?
-                <button onClick={ () => props.onLevelSelect(level.number - 1)}> Level {level.number}</button>
+                <a onClick={ () => props.onLevelSelect(level.number - 1)}> Level {level.number}</a>
                 :
-                <span>Level {level.number}</span>
+                <span className="disabled">Level {level.number}</span>
               }
             </li>
           );
         })}
       </ul>
-      <button onClick={() => props.onCancel()}>Cancel</button>
+      <a onClick={() => props.onCancel()} className="secondary">Cancel</a>
     </div>
   );
 };
