@@ -3,7 +3,6 @@ import { generate as getId } from 'shortid';
 import colorMap from './colorMap';
 
 const targetColor = '#D4AF37';
-const disabledColor = '#808080';
 
 export default class Cell {
 
@@ -103,6 +102,14 @@ export default class Cell {
     this.rect.fillColor = 'transparent';
     this.rect.strokeColor.hue = this.baseHUE;
     this._group.scaling = 1;
+  }
+
+  getShape(){
+    // To override
+    return {
+      points: 4,
+      radius: 1
+    };
   }
 
   getCenter(){

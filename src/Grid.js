@@ -149,4 +149,10 @@ export default class Grid {
     });
   }
 
+  onFrame(e) {
+    if (this.shape){
+      this.shape.onFrame(e);
+    }
+  }
+
 }

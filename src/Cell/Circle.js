@@ -9,12 +9,12 @@ export default class Circle extends Cell {
   }
 
   getShape(){
-    let shape = new Path.RegularPolygon(
-      this.rect.bounds.center.clone(), 10, this.rect.bounds.height / 3.5);
-
-    shape.fillColor = this.color;
-
-    return shape;
+    return {
+      center: this.rect.bounds.center.clone(),
+      points: 10,
+      radius: this.rect.bounds.height / 3.5,
+      color: this.color
+    };
   }
 
 

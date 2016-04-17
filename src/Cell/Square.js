@@ -16,11 +16,12 @@ export default class Square extends Cell {
     let x = this.rect.bounds.topLeft.x + (sizeW/2);
     let y = this.rect.bounds.topLeft.y + (sizeH/2);
 
-    let shape = new Path.Rectangle(new Point(x, y), new Size(sizeW, sizeH));
-
-    shape.fillColor = this.color;
-
-    return shape;
+    return {
+      center: this.rect.bounds.center.clone(),
+      points: 4,
+      radius: sizeH/2,
+      color: this.color
+    };
   }
 
   onFrame(e) {

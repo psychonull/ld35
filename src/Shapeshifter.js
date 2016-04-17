@@ -1,18 +1,32 @@
 
+const handleLenRate = 2.4;
+
 export default class Shapeshifter {
 
   constructor(options){
+    this.onArrived = options.onArrived;
+    this.connections = new Group();
+
     this.currentCell = null;
     this.nextCell = null;
-    this.destination = null;
+    this.state = null;
 
-    this.onArrived = options.onArrived;
+    this.circlePaths = [];
+    this.destination = null;
+    this.current = null;
+    this.baseScaling = null;
+    this.baseCenter = null;
+    this.baseRadius = null;
+    this.circleMove = null;
+    this.radius = 20;
+
+    this.color;
   }
 
   setCell(cell){
     // set shape for first time (no animations)
     this.currentCell = cell;
-    this.setShape(true);
+    this.setShape();
 
     // Fire event to initialize
     this.onArrived(this.currentCell);
@@ -20,7 +34,10 @@ export default class Shapeshifter {
 
   moveTo(cell){
     this.nextCell = cell;
+
+    // Start animation
     this.destination = this.nextCell.getCenter();
+    this.state = 'scale-down';
   }
 
   isMoving(){
@@ -34,38 +51,236 @@ export default class Shapeshifter {
   }
 
   setShape() {
-    if (this._group){
-      this._group.removeChildren();
-      this._group.remove();
-    }
-
     let shape = this.currentCell.getShape();
-    this._group = new Group(shape);
-    this._group.onFrame = e => this.onFrame(e);
+    this.radius = shape.radius;
+    this.color = shape.color;
+    this.createShape(shape);
+  }
+
+  createShape(shape) {
+    this.current = new Path.RegularPolygon(shape.center, shape.points, shape.radius);
+    this.current.fillColor = shape.color;
+    this.baseCenter = shape.center;
+    this.baseRadius = shape.radius;
+    this.baseScaling = this.current.scaling.clone();
   }
 
   onFrame(e) {
+    let scaleRate = e.delta*10;
+    let scaleSize = 4;
 
-    if (this.destination){
-      let vector = this.destination.subtract(this._group.position);
-      this._group.position = this._group.position.add(vector.divide(vector.length * 0.3));
-      this._group.rotate(25);
+    if (!this.state){
+      return;
+    }
 
-      // animate color
-      let from = this._group.children[0].fillColor.convert('rgb');
-      let to = this.nextCell.color.convert('rgb');
+    switch(this.state){
 
-      this._group.children[0].fillColor =
-        ((to.subtract(from)).multiply(e.delta)).add(from);
+      case 'scale-down': {
+        this.current.scaling = this.current.scaling.subtract(scaleRate);
+        if (this.current.scaling.length < this.baseScaling.length/scaleSize){
+          this.current.scaling = this.baseScaling.clone().divide(scaleSize);
+          this.state = 'to-circle';
+        }
+        break;
+      }
 
-      if (vector.length < 10) {
+      case 'to-circle': {
+        let c = new Path.Circle(this.baseCenter, this.baseRadius / scaleSize);
+        c.fillColor = this.color;
+        c.scaling = this.baseScaling.clone();
+        this.current.replaceWith(c);
+        this.current = c;
+        this.state = 'scale-up';
+        break;
+      }
+
+      case 'scale-up': {
+        this.current.scaling = this.current.scaling.add(scaleRate*2);
+        if (this.current.scaling.length > this.baseScaling.length*scaleSize){
+          this.current.scaling = this.baseScaling.multiply(scaleSize).clone();
+          this.state = 'to-shape';
+        }
+        break;
+      }
+
+      case 'to-shape': {
+        this.circleMove = new Path.Circle(this.current.bounds.center, this.baseRadius/2);
+        this.circleMove.fillColor = this.color;
+        this.state = 'move-to-destination';
+        break;
+      }
+
+      case 'move-to-destination': {
+        let vector = this.destination.subtract(this.circleMove.position);
+        this.circleMove.position = this.circleMove.position.add(
+          vector.divide(vector.length * 0.1)
+        );
+
+        if (this.circleMove.scaling.length > this.baseScaling.length){
+          this.circleMove.scaling = this.circleMove.scaling.add(scaleRate/5);
+        }
+
+        let conns = false;
+        if (this.current.scaling.x > 0 && this.current.scaling.y > 0){
+          this.current.scaling = this.current.scaling.subtract(scaleRate);
+          conns = true;
+        }
+        else {
+          this.current.visible = false;
+          this.connections.children = [];
+        }
+
+        if (conns){
+          this.circlePaths = [];
+          this.circlePaths.push(this.current);
+          this.circlePaths.push(this.circleMove);
+          this.generateConnections(this.circlePaths);
+        }
+
+        if (vector.length < 5) {
+          //this.state = null;
+          this.current.remove();
+          this.current = null;
+          //this.circleMove.remove();
+          this.connections.children = [];
+          //createCustomShape(destination, radius);
+          this.state = 'scale-down-2';
+        }
+        break;
+      }
+
+      case 'scale-down-2': {
+        this.circleMove.scaling = this.circleMove.scaling.subtract(scaleRate);
+        if (this.circleMove.scaling.length < this.baseScaling.length/scaleSize){
+          this.circleMove.scaling = this.baseScaling.clone().divide(scaleSize);
+          this.state = 'to-shape-2';
+        }
+        break;
+      }
+
+      case 'to-shape-2': {
+        //createCustomShape(this.destination, radius);
         this.clearMove();
         this.setShape();
 
-        this.onArrived(this.currentCell);
+        this.current.scaling = this.baseScaling.clone().divide(scaleSize);
+        this.circleMove.remove();
+        this.state = 'scale-up-2';
+        break;
+      }
+
+      case 'scale-up-2': {
+        this.current.scaling = this.current.scaling.add(scaleRate);
+        if (this.current.scaling.length > this.baseScaling.length*(scaleSize/3)){
+          this.current.scaling = this.baseScaling.clone();
+          this.state = null;
+
+          this.onArrived(this.currentCell);
+        }
+        break;
       }
     }
+/*
+  // Leaving it here for future use (maybe)
+  // animate color
+  let from = this._group.children[0].fillColor.convert('rgb');
+  let to = this.nextCell.color.convert('rgb');
 
+  this._group.children[0].fillColor =
+    ((to.subtract(from)).multiply(e.delta)).add(from);
+
+*/
+  }
+
+  createCustomShape(center, radius){
+    let points = Math.floor(Math.random() * 8) + 3;
+    this.current = new Path.RegularPolygon(center, points, radius);
+    this.baseCenter = center;
+    this.baseRadius = radius;
+    this.baseScaling = this.current.scaling.clone();
+  }
+
+  generateConnections(paths) {
+    // Remove the last connection paths:
+    this.connections.children = [];
+
+    for (var i = 0, l = paths.length; i < l; i++) {
+      for (var j = i - 1; j >= 0; j--) {
+        var path = this.metaball(paths[i], paths[j], 0.5, handleLenRate, 3000);
+        if (path) {
+          this.connections.appendTop(path);
+          path.removeOnMove();
+        }
+      }
+    }
+  }
+
+  metaball(ball1, ball2, v, handleLenRate, maxDistance) {
+    var center1 = ball1.position;
+    var center2 = ball2.position;
+    var radius1 = ball1.bounds.width / 2;
+    var radius2 = ball2.bounds.width / 2;
+    var pi2 = Math.PI / 2;
+    var d = center1.getDistance(center2);
+    var u1, u2;
+
+    if (radius1 === 0 || radius2 === 0){
+      return;
+    }
+
+    if (d > maxDistance || d <= Math.abs(radius1 - radius2)) {
+      return;
+    } else if (d < radius1 + radius2) { // case circles are overlapping
+      u1 = Math.acos((radius1 * radius1 + d * d - radius2 * radius2) /
+          (2 * radius1 * d));
+      u2 = Math.acos((radius2 * radius2 + d * d - radius1 * radius1) /
+          (2 * radius2 * d));
+    } else {
+      u1 = 0;
+      u2 = 0;
+    }
+
+    var angle1 = (center2.subtract(center1)).getAngleInRadians();
+    var angle2 = Math.acos((radius1 - radius2) / d);
+    var angle1a = angle1 + u1 + (angle2 - u1) * v;
+    var angle1b = angle1 - u1 - (angle2 - u1) * v;
+    var angle2a = angle1 + Math.PI - u2 - (Math.PI - u2 - angle2) * v;
+    var angle2b = angle1 - Math.PI + u2 + (Math.PI - u2 - angle2) * v;
+    var p1a = center1.add(this.getVector(angle1a, radius1));
+    var p1b = center1.add(this.getVector(angle1b, radius1));
+    var p2a = center2.add(this.getVector(angle2a, radius2));
+    var p2b = center2.add(this.getVector(angle2b, radius2));
+
+    // define handle length by the distance between
+    // both ends of the curve to draw
+    var totalRadius = (radius1 + radius2);
+    var d2 = Math.min(v * handleLenRate, (p1a.subtract(p2a)).length / totalRadius);
+
+    // case circles are overlapping:
+    d2 *= Math.min(1, d * 2 / (radius1 + radius2));
+
+    radius1 *= d2;
+    radius2 *= d2;
+
+    var path = new Path({
+      segments: [p1a, p2a, p2b, p1b],
+      style: ball1.style,
+      closed: true
+    });
+    var segments = path.segments;
+    segments[0].handleOut = this.getVector(angle1a - pi2, radius1);
+    segments[1].handleIn = this.getVector(angle2a + pi2, radius2);
+    segments[2].handleOut = this.getVector(angle2b - pi2, radius2);
+    segments[3].handleIn = this.getVector(angle1b + pi2, radius1);
+    return path;
+  }
+
+  getVector(radians, length) {
+    return new Point({
+      // Convert radians to degrees:
+      angle: radians * 180 / Math.PI,
+      length: length
+    });
   }
 
 }

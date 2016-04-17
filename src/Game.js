@@ -61,8 +61,11 @@ export default class Game extends EventEmitter {
     this.start(this.level);
   }
 
-  onFrame(/*e*/) {
+  onFrame(e) {
     // View Main onFrame
+    if (this.grid){
+      this.grid.onFrame(e);
+    }
 
     //console.dir(e);
     //e.delta
