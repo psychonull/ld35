@@ -12,7 +12,6 @@ const MainMenu = (props) => {
       <h1>LD35: Game</h1>
       <a href="" onClick={(e) => {e.preventDefault(); startAndClose(props, true);}}><h3>History Mode</h3></a>
       <a href="" onClick={(e) => {e.preventDefault(); startAndClose(props, false);}}><h3>Arcade</h3></a>
-      <a href=""><h3>Help</h3></a>
     </div>
   );
 };

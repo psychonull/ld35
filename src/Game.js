@@ -3,6 +3,8 @@ import Grid from './Grid';
 import levels from './levels';
 import { loadLevel } from './actions/gameStateActions.js';
 import { EventEmitter } from 'events';
+import story from './story.js';
+import Popup from './Popup.js';
 
 export default class Game extends EventEmitter {
 
@@ -16,6 +18,7 @@ export default class Game extends EventEmitter {
     this.store.subscribe(() => this.onChangeStore());
     this.container = document.getElementById('game-container');
     this.container.addEventListener('click', () => this.onContainerClick());
+    this.storyPopup = new Popup('popup');
   }
 
   start(lvlIdx, options){
@@ -25,6 +28,18 @@ export default class Game extends EventEmitter {
     this.clear();
     this.level = lvlIdx;
     this.options = Object.assign({}, this.options, options);
+
+    if(this.options.isHistory){
+      this.showStory(lvlIdx + 1).then(() => this.createGridAndDraw(lvlIdx));
+    }
+    else {
+      this.createGridAndDraw(lvlIdx);
+    }
+
+
+  }
+
+  createGridAndDraw(lvlIdx){
 
     this.grid = new Grid(this.store, levels[lvlIdx], view.bounds,
       () => this.onWinLevel());
@@ -85,6 +100,18 @@ export default class Game extends EventEmitter {
     if(this.grid.lost){
       this.onRestartLevel();
     }
+  }
+
+  showStory(levelNumber){
+    const DEFAULT_DURATION = 1000;
+    let s = story[levelNumber.toString()];
+    if(!s){
+      return Promise.resolve();
+    }
+    return this.storyPopup.show(s.s, {
+      timeout: s.d || DEFAULT_DURATION,
+      skippable: true
+    });
   }
 
 }

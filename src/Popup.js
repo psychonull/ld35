@@ -16,22 +16,24 @@ export default class Popup {
   }
 
   show(content, options){
-    let opt = Object.assign({}, defaults, options);
-    if(content){
-      if(typeof content === 'object'){
-        ReactDOM.render(content, this.container);
+    return new Promise((resolve) => {
+      let opt = Object.assign({}, defaults, options);
+      if(content){
+        if(typeof content === 'object'){
+          ReactDOM.render(content, this.container);
+        }
+        else {
+          this.container.innerHTML = opt.raw ? content : `<h1>${content}</h1>`;
+        }
       }
-      else {
-        this.container.innerHTML = opt.raw ? content : `<h1>${content}</h1>`;
+      this.container.classList.add('open');
+      if(opt.timeout){
+        this.timer = window.setTimeout(() => {this.hide(); resolve();}, opt.timeout);
       }
-    }
-    this.container.classList.add('open');
-    if(opt.timeout){
-      this.timer = window.setTimeout(() => this.hide(), opt.timeout);
-    }
-    if(opt.skippable){
-      this.container.addEventListener('click', () => this.hide());
-    }
+      if(opt.skippable){
+        this.container.addEventListener('click', () => {this.hide(); resolve();});
+      }
+    });
   }
 
   hide(clear){
