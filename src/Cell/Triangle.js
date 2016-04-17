@@ -8,7 +8,24 @@ export default class Triangle extends Cell {
     return Math.abs(p.x - to.x) === Math.abs(p.y - to.y);
   }
 
-  onFrame() {
+  generateShape(){
+    super.generateShape();
+
+    if (this.isTarget){
+      return;
+    }
+
+    let shape = new Path.RegularPolygon(
+      this.rect.bounds.center, 3, this.rect.bounds.width / 3);
+
+    shape.fillColor = this.color;
+
+    this.shape = shape;
+    this._group.addChild(shape);
+  }
+
+  onFrame(e) {
+    super.onFrame(e);
     // some custom animation
   }
 

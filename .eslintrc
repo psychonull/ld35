@@ -24,7 +24,11 @@
     view: true,
     project: true,
     Path: true,
-    PointText: true
+    PointText: true,
+    Point: true,
+    Size: true,
+    Group: true,
+    Color: true
   },
   "extends": [
     "eslint:recommended"

@@ -21,13 +21,15 @@ export default class Grid {
   }
 
   _generate(){
+    let margin = 50;
+
     let w = this.cfg.gridSize[0];
     let h = this.cfg.gridSize[1];
     let ctn = this.bounds;
 
     // TODO: Improve this calculation
-    let wCell = ctn.width / w;
-    let hCell = ctn.height / h;
+    let wCell = (ctn.width - margin) / w;
+    let hCell = (ctn.height - margin) / h;
 
     for (let i = 0; i < w; i++) {
       for (let j = 0; j < h; j++) {
@@ -42,8 +44,8 @@ export default class Grid {
         let opts = {
           position: { x: i, y: j},
           attrs: {
-            x: ctn.left + i * wCell,
-            y: ctn.top + j * hCell,
+            x: (margin/2) + ctn.left + i * wCell,
+            y: (margin/2) + ctn.top + j * hCell,
             w: wCell,
             h: hCell
           },
