@@ -8,6 +8,7 @@ import React from 'react';
 import configureStore from './store/configureStore';
 import MainMenu from './components/MainMenu.js';
 import Popup from './Popup.js';
+import qs from 'qs';
 
 window.React = React; //HACK: React is undefined error?
 
@@ -18,10 +19,17 @@ window.onload = function() {
   paper.setup('game-viewport');
 
   const store = configureStore();
-  let game = new Game(store);
+  let startingOptions = qs.parse(location.hash.substr(1));
+  let game = new Game(store, startingOptions);
 
-  let p = new Popup('main-menu');
-  p.show(<MainMenu game={game} onClose={() => p.hide()} />);
+  if(startingOptions.level){
+    document.getElementById('container').classList.remove('hidden');
+    game.start(parseInt(startingOptions.level) - 1);
+  }
+  else {
+    let p = new Popup('main-menu');
+    p.show(<MainMenu game={game} onClose={() => p.hide()} />);
+  }
 
   ReactDOM.render(
     <Provider store={store}>

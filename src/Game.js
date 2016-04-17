@@ -5,17 +5,18 @@ import { loadLevel } from './actions/gameStateActions.js';
 
 export default class Game {
 
-  constructor(store){
+  constructor(store, options){
     view.onFrame = e => this.onFrame(e);
 
     this.level = 0;
     this.store = store;
+    this.options = options;
   }
 
   start(lvlIdx, options){
     this.clear();
     this.level = lvlIdx;
-    this.options = options;
+    this.options = Object.assign({}, this.options, options);
 
     this.grid = new Grid(this.store, levels[lvlIdx], view.bounds,
       () => this.onWinLevel());
