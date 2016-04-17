@@ -5,7 +5,7 @@ export default class Triangle extends Cell {
 
   canMoveTo(to){
     let p = this.position;
-    return (!this.maxMoves || (this._getSteps(this.position, to, true) > this.maxMoves ? false : true)) &&
+    return ((this._getSteps(this.position, to, true) > 2 ? false : true)) &&
       Math.abs(p.x - to.x) === Math.abs(p.y - to.y);
   }
 
