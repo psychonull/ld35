@@ -147,11 +147,22 @@ export default class Grid {
 
   onLevelLost(){
     this.lost = true;
+    let last;
     this.cells.forEach((c) => {
       if(c.id !== this.current.id){
         c.hide();
       }
+      else {
+        last = c;
+      }
     });
+
+    setTimeout(() => {
+      last.hide();
+      setTimeout(() => {
+        this.shape.destroy();
+      }, 250);
+    }, 500);
   }
 
   onFrame(e) {

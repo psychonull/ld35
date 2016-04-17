@@ -19,6 +19,8 @@ export default class Cell {
     this.color = new Color(this.baseColor);
     this.baseHUE = this.color.hue;
 
+    this.hidden = false;
+    this.hiding = false;
     this._generate();
   }
 
@@ -133,6 +135,19 @@ export default class Cell {
 
   onFrame(e) {
     let sinus;
+    if (this.hidden){
+      return;
+    }
+
+    if (this.hiding){
+      this._group.scaling = this._group.scaling.multiply(0.9);
+      if (this._group.scaling.length <= 0.1){
+        this.hidden = true;
+        this.rect.visible = false;
+      }
+      return;
+    }
+
     if (this.isActive){
       //sinus = Math.sin(e.time * 2 + 0.5) * 0.05;
       //this._group.scaling = sinus + 0.95;
@@ -159,7 +174,8 @@ export default class Cell {
   }
 
   hide(){
-    this.rect.visible = false;
+    this.hiding = true;
+    //this.rect.visible = false;
   }
 
 }
