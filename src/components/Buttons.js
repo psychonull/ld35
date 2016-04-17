@@ -21,6 +21,13 @@ const showLevelSelection = (game) => {
   />, { timeout: false, skippable: false });
 };
 
+const showHelp = () => {
+  let popup = new Popup('help');
+  popup.show(null, {
+    skippable: true
+  });
+};
+
 const Buttons = (props) => {
   return (
     <div className="buttons">
@@ -31,7 +38,7 @@ const Buttons = (props) => {
         onClick={() => props.actions.toggleSound()}
         title={ props.sound ? 'SOUND OFF' : 'SOUND ON' }>
       </a>
-      <a className="icon-help-circled" title="Help"></a>
+      <a className="icon-help-circled" title="Help" onClick={() => showHelp()}></a>
     </div>
   );
 };
