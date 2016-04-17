@@ -30,12 +30,14 @@ export default class Popup {
       this.timer = window.setTimeout(() => this.hide(), opt.timeout);
     }
     if(opt.skippable){
-      this.container.addEventListener('click', this.hide.bind(this));
+      this.container.addEventListener('click', () => this.hide());
     }
   }
 
-  hide(){
-    this.container.innerHTML = '';
+  hide(clear){
+    if(clear){
+      this.container.innerHTML = '';
+    }
     this.container.classList.remove('open');
     this.container.removeEventListener('click');
   }

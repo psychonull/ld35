@@ -1,0 +1,14 @@
+#help {
+  text-align: left;
+  font-size: 1.5em;
+  font-family: $hud-font;
+  padding: 30px;
+  li {
+    list-style-type: circle;
+  }
+  a {
+    position: absolute;
+    bottom: 20%;
+    right: 20%;
+  }
+}
