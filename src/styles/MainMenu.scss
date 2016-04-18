@@ -1,0 +1,51 @@
+#main-menu {
+  font-family: $hud-font;
+
+
+  .title {
+    font-size: 4em;
+    font-family: monospace;
+    margin-bottom: 20px;
+  }
+
+  .options {
+    border: 4px solid #326998;
+    padding: 20px;
+    max-width: 300px;
+    margin: auto;
+
+    a, a:visited {
+      font-size: 1.5em;
+      color: white;
+      transition: .5s all;
+      animation: glow .5s infinite alternate;
+    }
+
+    a:hover {
+      animation: none;
+      color: lighten(rgb(29, 74, 113), 20%);
+    }
+  }
+
+  @keyframes glow {
+    to {
+        text-shadow: 0 0 10px lighten(rgb(29, 74, 113), 20%);
+    }
+  }
+
+  hr {
+    border: 1px solid #326998;
+  }
+
+  .footer {
+    color: #424242;
+    font-size: 0.9em;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    a, a:active, a:hover {
+      color: #525252;
+    }
+  }
+}
