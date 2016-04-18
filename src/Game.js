@@ -7,6 +7,8 @@ import Particles from './Particles';
 import story from './story.js';
 import Popup from './Popup.js';
 import { register as registerSoundManager } from './sounds/Manager.js';
+import winMessage from './winMessage.js';
+import ShareLevel from './components/ShareLevel.js';
 
 export default class Game extends EventEmitter {
 
@@ -59,10 +61,11 @@ export default class Game extends EventEmitter {
   }
 
   startCustomLevel(levelData){
+    this.customLevel = levelData;
     this.clear();
     this.grid = new Grid(this.store, levelData, view.bounds,
-      () => window.alert('Custom level ok!'), () => this.onRestartLevel());
-      
+      () => this.onWinCustomLevel());
+
     this.store.dispatch(loadLevel(levelData, 'Custom'));
   }
 
@@ -70,12 +73,25 @@ export default class Game extends EventEmitter {
     project.activeLayer.removeChildren();
   }
 
+  onWinCustomLevel(){
+    this.storyPopup.show(
+      <ShareLevel levelData={this.customLevel}
+        onClose={() => {this.storyPopup.hide(); this.onRestartLevel();}} />,
+      {
+        timeout: false,
+        skippable: false
+      }
+    );
+  }
+
   onWinLevel(){
     this.emit('game:goal', this.level);
 
     if(this.level == levels.length -1){
-      window.alert("There are no more levels! starting again...");
-      window.location.reload();
+      this.storyPopup.show(winMessage, {
+        timeout: 10000,
+        skippable: true
+      }).then(()=> window.location.reload());
       return;
     }
 
@@ -83,7 +99,12 @@ export default class Game extends EventEmitter {
   }
 
   onRestartLevel(){
-    this.start(this.level, {}, true);
+    if(this.customLevel){
+      this.startCustomLevel(this.customLevel);
+    }
+    else{
+      this.start(this.level, {}, true);
+    }
   }
 
   onFrame(e) {
