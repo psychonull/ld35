@@ -41,11 +41,11 @@ export default class Game extends EventEmitter {
   }
 
   createGridAndDraw(lvlIdx){
+    this.store.dispatch(loadLevel(levels[lvlIdx], lvlIdx + 1));
 
     this.grid = new Grid(this.store, levels[lvlIdx], view.bounds,
       () => this.onWinLevel());
 
-    this.store.dispatch(loadLevel(levels[lvlIdx], lvlIdx + 1));
 
     view.draw();
   }
