@@ -14,13 +14,14 @@ import Particles from './Particles';
 
 export default class Grid extends EventEmitter {
 
-  constructor(store, cfg, bounds, onWin){
+  constructor(store, cfg, bounds, onWin, onLost){
     super();
     this.store = store;
     this.cfg = cfg;
     this.bounds = bounds;
     this.maxMoves = this.cfg.maxMoves;
     this.onWin = onWin;
+    this.onLost = onLost;
     this.lost = false;
 
     this.cells = [];
@@ -205,6 +206,7 @@ export default class Grid extends EventEmitter {
       last.hide();
       setTimeout(() => {
         this.shape.destroy();
+        setTimeout(() => this.onLost(), 2000);
       }, 250);
     }, 500);
   }
