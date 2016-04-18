@@ -1,11 +1,13 @@
 
 import Cell from './Cell';
 
+const mx = 2; // max moves
+
 export default class Square extends Cell {
 
   canMoveTo(to){
     let p = this.position;
-    return (this._getSteps(this.position, to, true) > 2 ? false : true) &&
+    return (this._getSteps(this.position, to, true) > mx ? false : true) &&
       ((p.x === to.x && p.y !== to.y) ||
       (p.y === to.y && p.x !== to.x));
   }
@@ -17,6 +19,14 @@ export default class Square extends Cell {
       radius: this.rect.bounds.height/4,
       color: this.color
     };
+  }
+
+  getMoveMatrix(){
+    return [
+      [0, mx,0],
+      [mx,-1,mx],
+      [0, mx,0]
+    ];
   }
 
   onFrame(e) {

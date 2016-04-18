@@ -1,11 +1,13 @@
 
 import Cell from './Cell';
 
+const mx = 1; // max moves
+
 export default class Circle extends Cell {
 
   canMoveTo(to){
     // can move to any with max of 1
-    return this._getSteps(this.position, to, true) > 1 ? false : true;
+    return this._getSteps(this.position, to, true) > mx ? false : true;
   }
 
   getShape(){
@@ -17,6 +19,13 @@ export default class Circle extends Cell {
     };
   }
 
+  getMoveMatrix(){
+    return [
+      [mx,mx,mx],
+      [mx,-1,mx],
+      [mx,mx,mx]
+    ];
+  }
 
   onFrame(e) {
     super.onFrame(e);
