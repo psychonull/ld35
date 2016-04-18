@@ -23,7 +23,7 @@ export default class Square extends Cell {
 
   getMoveMatrix(){
     return {
-      color: this.baseColor,
+      color:  this.baseColor,
       matrix: [
         [0, mx,0],
         [mx,-1,mx],

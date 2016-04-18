@@ -19,6 +19,13 @@ const MoveHelper = (props) => {
     <div className={"move-helper " + props.className}>
       <h2>{props.title}</h2>
       <div className="content">
+
+      { props.moveGrid.target &&
+        <div className="target">
+          <label>Next Level</label>
+        </div>
+      }
+
       {
         matrix.map( (row, i) => {
           let rowCSS = '';

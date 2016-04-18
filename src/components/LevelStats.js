@@ -7,9 +7,9 @@ const LevelStats = (props) => {
       <div className="level-number">
         Level <span className="value">{ props.levelNumber }</span></div>
       <div className="moves smaller">
-        <span>Moves:</span>
+        <span>Moves</span>
         <span className="value">{ props.moves }</span>
-        { props.maxMoves && <span> / </span> }
+        { props.maxMoves && <span> of </span> }
         { props.maxMoves &&
           <span className="value">{ props.maxMoves }</span>
         }

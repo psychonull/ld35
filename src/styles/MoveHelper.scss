@@ -6,6 +6,23 @@
   .content {
     max-width: 130px;
     margin: 0 auto;
+    position: relative;
+
+    .target {
+      position: absolute;
+      z-index: 15;
+      left: -2px;
+      top: 0;
+      width: 100%;
+      line-height: 5.5em;
+      padding: 10px 0;
+      text-align: center;
+      border: 3px solid #D4AF37;
+      border-left: none;
+      border-right: none;
+      background-color: rgba(212, 175, 55, 0.36);
+      height: 100px;
+    }
   }
 }
 
@@ -16,6 +33,10 @@
   .content {
     max-width: 75px;
     margin: 0 auto;
+
+    .target {
+      display: none;
+    }
   }
 }
 

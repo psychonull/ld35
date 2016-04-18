@@ -51,8 +51,10 @@ export default class Cell {
     this._group.onMouseEnter = () => {
       if (this.isInteractive() && this.canMove){
         this.isHover = true;
+        document.body.style.cursor = "pointer";
         this.store.dispatch(
           nextMove(Object.assign({
+            target: this.isTarget,
             enabled: this.isTarget ? false : true,
             visible: true
           }, this.getMoveMatrix()))
@@ -63,7 +65,6 @@ export default class Cell {
     this._group.onMouseLeave = () => {
       if (this.isInteractive() && this.canMove){
         this.isHover = false;
-
         this.store.dispatch(
           nextMove(Object.assign({
             enabled: false,
@@ -80,6 +81,7 @@ export default class Cell {
         this.resetStyle();
         this.store.dispatch(
           nextMove(Object.assign({
+            target: this.isTarget,
             enabled: false,
             visible: true
           }, this.getMoveMatrix()))
@@ -121,6 +123,8 @@ export default class Cell {
   }
 
   resetStyle(){
+    document.body.style.cursor = "default";
+
     if (this.isTarget){
       return;
     }
