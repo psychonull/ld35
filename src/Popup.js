@@ -30,10 +30,16 @@ export default class Popup {
       if(opt.timeout){
         this.timer = window.setTimeout(() => {this.hide(); resolve();}, opt.timeout);
       }
+      this.clickHandler = () => this.hideAndResolve(resolve);
       if(opt.skippable){
-        this.container.addEventListener('click', () => {this.hide(); resolve();});
+        this.container.addEventListener('click', this.clickHandler);
       }
     });
+  }
+
+  hideAndResolve(resolve){
+    this.hide();
+    resolve();
   }
 
   hide(clear){
@@ -41,7 +47,7 @@ export default class Popup {
       this.container.innerHTML = '';
     }
     this.container.classList.remove('open');
-    this.container.removeEventListener('click');
+    this.container.removeEventListener('click', this.clickHandler);
   }
 
 }
