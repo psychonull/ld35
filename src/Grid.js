@@ -2,7 +2,9 @@ import {
   Cell,
   Square,
   Triangle,
-  Circle
+  Circle,
+  Pentagon,
+  Hexagon
 } from './Cell';
 
 import { addMove, changeMove, nextMove } from './actions/gameStateActions.js';
@@ -83,6 +85,8 @@ export default class Grid extends EventEmitter {
           case 1: cell = new Square(opts); break;
           case 2: cell = new Triangle(opts); break;
           case 3: cell = new Circle(opts); break;
+          case 4: cell = new Pentagon(opts); break;
+          case 5: cell = new Hexagon(opts); break;
           default: cell = new Cell(opts); break;
         }
 
