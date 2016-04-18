@@ -49,8 +49,11 @@ export default class Grid {
         let target = code >= 900 && code <= 999 ? true : false;
         let current = code >= 100 && code <= 199 ? true : false;
 
-        if (current || target){
+        if (current){
           code = +(code / 100).toString().split('.')[1];
+        }
+        else if (target){
+          code = 1;
         }
 
         let opts = {

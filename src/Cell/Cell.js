@@ -15,7 +15,7 @@ export default class Cell {
     this.isActive = false;
     this.isHover = false;
 
-    this.baseColor = colorMap[this.code];
+    this.baseColor = colorMap[this.code] || 'black';
     this.color = new Color(this.baseColor);
     this.baseHUE = this.color.hue;
 
@@ -38,7 +38,7 @@ export default class Cell {
     this.rect.style = {
       fillColor: 'transparent',
       strokeColor: this.color,
-      strokeWidth: 5
+      strokeWidth: Math.floor(this.attrs.w / 22)
     };
 
     this.rect.scale(0.95);
@@ -127,7 +127,30 @@ export default class Cell {
   setTarget(){
     this.isTarget = true;
     this.rect.strokeColor = targetColor;
-    this.rect.fillColor = targetColor;
+
+    this._innerG = new Group();
+    this._r1 = this.rect.clone();
+    this._r2 = this.rect.clone();
+    this._r3 = this.rect.clone();
+
+    this._r1.scale(0.8);
+    this._r2.scale(0.6);
+    this._r3.scale(0.3);
+
+    this._r1.fillColor = 'black';
+    this._r1.strokeColor = targetColor;
+
+    this._r2.fillColor = targetColor;
+    this._r2.strokeColor = 'black';
+
+    this._r3.fillColor = 'black';
+    this._r3.strokeColor = targetColor;
+
+    this._innerG.addChild(this._r1);
+    this._innerG.addChild(this._r2);
+    this._innerG.addChild(this._r3);
+
+    this._group.addChild(this._innerG);
   }
 
   canMoveTo(/*position*/){
@@ -161,9 +184,16 @@ export default class Cell {
       this._group.scaling = this._group.scaling.multiply(0.9);
       if (this._group.scaling.length <= 0.1){
         this.hidden = true;
-        this.rect.visible = false;
+        this._group.visible = false;
       }
       return;
+    }
+
+    if (this.isTarget){
+      //animated
+      this._r1.rotate(-1);
+      this._r2.rotate(1);
+      this._r3.rotate(-1);
     }
 
     if (this.isActive){
@@ -175,11 +205,8 @@ export default class Cell {
       sinus = Math.sin(e.time * 5 + 0.4) * 0.3;
       this.rect.strokeColor.brightness = sinus + 0.8;
       this._group.scaling = 0.98;
-      this.rect.strokeWidth = 6;
     }
     else if (!this.isTarget && !this.active && this.code !== 0){
-      // TODO: make it animated
-      this.rect.strokeWidth = 5;
       this.rect.strokeColor.brightness = 0.3;
       this._group.scaling = 0.95;
     }

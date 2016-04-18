@@ -74,7 +74,10 @@ export default class Shapeshifter {
 
   win(){
     this.state = null;
-    this.current.visible = false;
+
+    if (this.current){
+      this.current.visible = false;
+    }
   }
 
   onFrame(e) {
