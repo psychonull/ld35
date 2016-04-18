@@ -74,7 +74,8 @@ export default class Grid extends EventEmitter {
           code,
           maxMoves: this.maxMoves,
           onReady: () => this.checkStart(),
-          store: this.store
+          store: this.store,
+          grid: this
         };
 
         let cell;
@@ -152,6 +153,7 @@ export default class Grid extends EventEmitter {
       return;
     }
 
+
     this.current = cell;
     this.current.setCurrent();
 
@@ -165,6 +167,8 @@ export default class Grid extends EventEmitter {
         visible: true
       }, cell.getMoveMatrix()))
     );
+
+    this.emit('move:shape', this.current.code);
 
     if(this.isLevelLost()){
       this.onLevelLost();

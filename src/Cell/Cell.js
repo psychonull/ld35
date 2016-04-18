@@ -49,7 +49,7 @@ export default class Cell {
     this._group.addChild(this.rect);
 
     this._group.onMouseEnter = () => {
-      if (this.isInteractive() && this.canMove){
+      if (this.isInteractive() && this.canMove && !this.grid.shape.isMoving()){
         this.isHover = true;
         document.body.style.cursor = "pointer";
         this.store.dispatch(
@@ -59,6 +59,7 @@ export default class Cell {
             visible: true
           }, this.getMoveMatrix()))
         );
+        this.grid.emit('hover:cell');
       }
     };
 
