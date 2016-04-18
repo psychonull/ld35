@@ -23,6 +23,14 @@ $(document).on('ready', () => {
     onChangeGridSize();
   });
 
+  $(document).on('keypress', function(e){
+    let controlIndex = e.keyCode - 49;
+    let btn = $('#cell-types button').get(controlIndex);
+    if(btn){
+      btn.click();
+    }
+  });
+
   $('#grid-container').on('click', 'td', onClickGridCell);
 
   $('.tool').on('click', function(e){
@@ -155,18 +163,24 @@ function validate(){
   return state.start && state.end;
 }
 
-function onClickGridCell(){
-  if(selectedTool === null){
-    return;
+function onClickGridCell(e){
+  let isDelete = e.ctrlKey;
+  let tool;
+  if(selectedTool === null || isDelete){
+    tool = 0;
+  }
+  else {
+    tool = selectedTool;
   }
   let [x, y] = $(this).data('location').split('-').map((x) => parseInt(x));
-  if(selectedTool === 100 && !state.map[y][x]){
+  
+  if(tool === 100 && !state.map[y][x]){
     console.warn('map start show be of a type ');
   }
-  if(selectedTool === 100 || selectedTool === 900){
-    $('#grid-container td').removeClass('opt' + selectedTool);
-    this.className += ' opt' + selectedTool;
-    if(selectedTool === 100){
+  if(tool === 100 || tool === 900){
+    $('#grid-container td').removeClass('opt' + tool);
+    this.className += ' opt' + tool;
+    if(tool === 100){
       state.start = [x, y];
     }
     else {
@@ -174,8 +188,8 @@ function onClickGridCell(){
     }
   }
   else {
-    this.className = 'opt' + selectedTool;
-    state.map[y][x] = selectedTool;
+    this.className = 'opt' + tool;
+    state.map[y][x] = tool;
   }
   refreshExportButton();
 }
