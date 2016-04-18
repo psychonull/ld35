@@ -13,6 +13,11 @@ let selectedTool = null;
 
 
 $(document).on('ready', () => {
+
+  state.x = parseInt($('#x').val());
+  state.y = parseInt($('#y').val());
+  onChangeGridSize();
+
   $('#x, #y').on('change', function() {
     state[this.id] = parseInt($(this).val());
     onChangeGridSize();
@@ -23,15 +28,15 @@ $(document).on('ready', () => {
   $('.tool').on('click', function(e){
     e.preventDefault();
     selectedTool = parseInt($(this).data('tiletype'));
-    $('.tool').removeClass('btn-primary');
-    $(this).addClass('btn-primary');
+    $('.tool').removeClass('selected');
+    $(this).addClass('selected');
   });
 
   $('#export').on('click', function(e){
     e.preventDefault();
     let level = getLevelFromState(state);
     $('#export-text').val(level);
-    $('#test-link').attr('href', `/#${qs.stringify({levelData: level})}`);
+    $('#test-link').attr('href', `${location.href.replace('editor.html', '')}#${qs.stringify({levelData: level})}`);
     $('#export-modal').modal('show');
   });
 
@@ -50,13 +55,15 @@ $(document).on('ready', () => {
     }
     refreshState(level);
     refreshControlsFromState();
-
+    refreshExportButton();
     $('#import-modal').modal('close');
   });
 
   $('#export-text').on('focus', function(){
     $(this).select();
   });
+
+
 });
 
 function refreshState(level){
@@ -132,6 +139,22 @@ function getLevelFromState(state){
   return JSON.stringify(data);
 }
 
+function refreshExportButton(){
+  let $exportButton = $('#export, #test-link');
+  if(!validate()){
+    $exportButton.attr('disabled', 'disabled');
+  }
+  else {
+    $exportButton.removeAttr('disabled');
+    let level = getLevelFromState(state);
+    $('#test-link').attr('href', `${location.href.replace('editor.html', '')}#${qs.stringify({levelData: level})}`);
+  }
+}
+
+function validate(){
+  return state.start && state.end;
+}
+
 function onClickGridCell(){
   if(selectedTool === null){
     return;
@@ -154,6 +177,7 @@ function onClickGridCell(){
     this.className = 'opt' + selectedTool;
     state.map[y][x] = selectedTool;
   }
+  refreshExportButton();
 }
 
 function onChangeGridSize(){
@@ -174,4 +198,5 @@ function onChangeGridSize(){
     $grid.append($row);
   }
   $('#grid-container').html($grid);
+  refreshExportButton();
 }
