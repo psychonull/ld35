@@ -37,7 +37,10 @@ export default class Game extends EventEmitter {
     this.options = Object.assign({}, this.options, options);
 
     if(this.options.isHistory && !isReset){
-      this.showStory(lvlIdx + 1).then(() => this.createGridAndDraw(lvlIdx));
+      this.showStory(lvlIdx + 1).then(() => {
+        this.emit('story:out', lvlIdx + 1);
+        this.createGridAndDraw(lvlIdx);
+      });
     }
     else {
       this.createGridAndDraw(lvlIdx);
@@ -68,7 +71,7 @@ export default class Game extends EventEmitter {
   }
 
   onWinLevel(){
-    this.emit('level:win', this.level);
+    this.emit('game:goal', this.level);
 
     if(this.level == levels.length -1){
       window.alert("There are no more levels! starting again...");
@@ -123,6 +126,7 @@ export default class Game extends EventEmitter {
     if(!s){
       return Promise.resolve();
     }
+    this.emit('story:in', levelNumber);
     return this.storyPopup.show(s.s, {
       timeout: s.d || DEFAULT_DURATION,
       skippable: true,
