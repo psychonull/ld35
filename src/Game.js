@@ -59,10 +59,11 @@ export default class Game extends EventEmitter {
   }
 
   startCustomLevel(levelData){
+    this.customLevel = levelData;
     this.clear();
     this.grid = new Grid(this.store, levelData, view.bounds,
       () => window.alert('Custom level ok!'), () => this.onRestartLevel());
-      
+
     this.store.dispatch(loadLevel(levelData, 'Custom'));
   }
 
@@ -83,7 +84,12 @@ export default class Game extends EventEmitter {
   }
 
   onRestartLevel(){
-    this.start(this.level, {}, true);
+    if(this.customLevel){
+      this.startCustomLevel(this.customLevel);
+    }
+    else{
+      this.start(this.level, {}, true);
+    }
   }
 
   onFrame(e) {
