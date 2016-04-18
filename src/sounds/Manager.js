@@ -5,7 +5,7 @@ import $ from 'jquery';
 export const register = (game) => {
 
   game.on('game:start', () => {
-    Sounds.bgMusic.play();
+    //Sounds.bgMusic.play();
   });
 
   game.on('story:in', () => {
@@ -31,11 +31,21 @@ export const register = (game) => {
 
 export const registerGrid = (grid) => {
   grid.on('game:goal', () => {
-    console.log('gamegoal');
+    //Sounds.win1.play();
+    //setTimeout(() => {
+      Sounds.win2.play();
+    //}, 300);
   });
 
   grid.on('game:lost', () => {
-    console.log('gamelost');
+    Sounds.loose1.play();
+    setTimeout(() => {
+      Sounds.loose2.play();
+    }, 1000);
+  });
+
+  grid.on('hover:cell', () => {
+    Sounds.hoverCell.play();
   });
 
   grid.on('move:start', () => {
@@ -43,10 +53,10 @@ export const registerGrid = (grid) => {
   });
 
   grid.on('move:end', () => {
-    Sounds.moving.stop();
+    Sounds.arrived.play();
   });
 
-  grid.on('move:target', () => {
-    Sounds.hitTarget.play();
+  grid.on('move:shape', code => {
+    Sounds['shape' + code].play();
   });
 };
