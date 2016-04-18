@@ -1,4 +1,5 @@
 import ReactDOM from 'react-dom';
+import $ from 'jquery';
 const defaults = {
   timeout: false,
   raw: false,
@@ -34,6 +35,9 @@ export default class Popup {
       if(opt.skippable){
         this.container.addEventListener('click', this.clickHandler);
       }
+      if(opt.video){
+        this.getVideo(opt.video).prependTo(this.container);
+      }
     });
   }
 
@@ -48,6 +52,13 @@ export default class Popup {
     }
     this.container.classList.remove('open');
     this.container.removeEventListener('click', this.clickHandler);
+  }
+
+  getVideo(name){
+    return $(`<video id="bg-video" autoplay muted loop poster="//thumbs.gfycat.com/${name}-poster.jpg">
+      <source type="video/webm" src="https://zippy.gfycat.com/${name}.webm">
+      <source type="video/mp4" src="https://fat.gfycat.com/${name}.mp4">
+    </video>`);
   }
 
 }
