@@ -19,7 +19,6 @@ export default class Game extends EventEmitter {
     this.options = options;
     this.store.subscribe(() => this.onChangeStore());
     this.container = document.getElementById('game-container');
-    this.container.addEventListener('click', () => this.onContainerClick());
     this.storyPopup = new Popup('popup');
     registerSoundManager(this);
     if(!this.store.getState().gameState.sound){
@@ -53,7 +52,7 @@ export default class Game extends EventEmitter {
     this.store.dispatch(loadLevel(levels[lvlIdx], lvlIdx + 1));
 
     this.grid = new Grid(this.store, levels[lvlIdx], view.bounds,
-      () => this.onWinLevel());
+      () => this.onWinLevel(), () => this.onRestartLevel());
 
 
     view.draw();
@@ -62,7 +61,8 @@ export default class Game extends EventEmitter {
   startCustomLevel(levelData){
     this.clear();
     this.grid = new Grid(this.store, levelData, view.bounds,
-      () => window.alert('Custom level ok!'));
+      () => window.alert('Custom level ok!'), () => this.onRestartLevel());
+      
     this.store.dispatch(loadLevel(levelData, 'Custom'));
   }
 
@@ -112,12 +112,6 @@ export default class Game extends EventEmitter {
       sound: state.sound,
       maxLevel: state.maxLevel
     }));
-  }
-
-  onContainerClick(){
-    if(this.grid.lost){
-      this.onRestartLevel();
-    }
   }
 
   showStory(levelNumber){
