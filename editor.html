@@ -15,22 +15,49 @@
         background-color: black !important;
       }
 
+      .alert {
+        margin: 10px;
+        padding: 3px 10px;
+      }
+
       .panel {
         padding: 10px;
+        background-color: transparent;
+        color: #fff;
+        border: 2px solid #326998;
+        margin-bottom: 2px;
+      }
+
+      .form-group {
+        margin-right: 20px;
+      }
+
+      .form-control {
+        background-color: black;
+        color: #fff;
+      }
+
+      input[type=number] {
+        max-width: 100px;
       }
 
       #grid-container {
         margin: auto;
+        margin-top: 20px;
       }
 
       #grid-container table{
         margin: auto;
+        border-collapse: separate;
+        border-spacing: 3px;
       }
 
       #grid-container td {
         width: 50px;
         height: 50px;
-        border: 1px solid #CDCDCD;
+        border: 1px solid #4B4B4B;
+        border-radius: 6px;
+        position: relative;
       }
 
       .tool {
@@ -38,22 +65,61 @@
         font-weight: bold;
       }
 
+      .tool:hover {
+        color: white;
+        text-decoration: underline;
+      }
+
+      .tool.start {
+        margin-left: 50px;
+      }
+
+      .tool.start, .tool.finish {
+        border-color: #fff;
+        background: #000;
+      }
+
       .tool.selected {
-        border-bottom: 5px solid #316EA1;
+        color: #fff!important;
+      }
+
+      .tool.start.selected, .tool.finish.selected {
+        background-color: #fff;
+        color: #000!important;
       }
 
       .opt0 {
-        background-color: black;
+        border: 2px solid #4B4B4B;
+        background-color: #000;
       }
+      .opt0.selected {
+        background-color: #4B4B4B;
+      }
+
       .opt1 {
+        border: 2px solid #316EA1!important;
+        background-color: #000;
+      }
+      .opt1.selected {
         background-color: #316EA1;
       }
+
       .opt2 {
+        border: 2px solid #A13146!important;
+        background-color: #000;
+      }
+      .opt2.selected {
         background-color: #A13146;
       }
+
       .opt3 {
+        border: 2px solid #6BA348!important;
+        background-color: #000;
+      }
+      .opt3.selected {
         background-color: #6BA348;
       }
+
       .opt100, .opt900 {
         text-align: center;
       }
@@ -100,8 +166,8 @@
           <button data-tileType="1" class="btn tool opt1">Square</button>
           <button data-tileType="2" class="btn tool opt2">Triangle</button>
           <button data-tileType="3" class="btn tool opt3">Circle</button>
-          <button data-tileType="100" class="btn tool">start</button>
-          <button data-tileType="900" class="btn tool">finish</button>
+          <button data-tileType="100" class="btn tool start">start</button>
+          <button data-tileType="900" class="btn tool finish">finish</button>
         </div>
         <div class="col-xs-4">
           Actions
