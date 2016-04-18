@@ -146,6 +146,7 @@ export default class Grid extends EventEmitter {
     this.current.unsetCurrent();
 
     if (cell.id === this.target.id){
+      this.emit('game:goal');
       this._onWin();
       return;
     }
@@ -181,6 +182,7 @@ export default class Grid extends EventEmitter {
   }
 
   onLevelLost(){
+    this.emit('game:lost');
     this.lost = true;
 
     this.store.dispatch(
@@ -208,7 +210,6 @@ export default class Grid extends EventEmitter {
   }
 
   _onWin(){
-    this.emit('move:target');
 
     this.shape.win();
 

@@ -13,6 +13,10 @@ export const hoverLink = new Howl({
   urls: ['assets/sounds/hoverLink.wav']
 });
 
+export const clickLink = new Howl({
+  urls: ['assets/sounds/hoverLink.wav']
+});
+
 export const moving = new Howl({
   urls: ['assets/sounds/hoverLink.wav'],
   loop: true
