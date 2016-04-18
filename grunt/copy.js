@@ -7,5 +7,20 @@ module.exports = {
       src: "dist/tourney-web.js",
       dest: "../TourneyParse/public/js/tourney-web.js"
     }]
+  },
+  deploy: {
+    files: [{
+      src: "dist/**",
+      dest: "./deploy/"
+    },
+    {
+      src: "assets/**",
+      dest: "./deploy/"
+    },
+    {
+      src: "./*.html",
+      dest: "./deploy/"
+    }
+    ]
   }
 };

@@ -18,3 +18,20 @@ copydist:
   - 'uglify:all'
   - 'cssmin:all'
   - 'copy:dist'
+
+prod:
+  - 'clean:deploy'
+  - 'sass'
+  - 'browserify'
+  - 'uglify:all'
+  - 'cssmin:all'
+  - 'copy:deploy'
+
+deploy:
+  - 'clean:deploy'
+  - 'sass'
+  - 'browserify'
+  - 'uglify:all'
+  - 'cssmin:all'
+  - 'copy:deploy'
+  - 'buildcontrol:pages'
