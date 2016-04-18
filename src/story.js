@@ -15,27 +15,27 @@ const storyByLevel = {
     "s": "and even found other myselves",
     "d": 2500
   },
-  "7": {
+  "8": {
     "s": "Every place makes me feel different.",
     "d": 2500
   },
-  "8": {
+  "9": {
     "s": "I need to get to tomorrow before wearing down my energy ",
     "d": 2500
   },
-  "7a": {
+  "8a": {
     "s": "I don't know what's the goal here. But the show must go on.",
     "d": 2500
   },
-  "8a": {
+  "9a": {
     "s": "Go on.",
     "d": 2500
   },
-  "10a": {
+  "11a": {
     "s": "Keep going.",
     "d": 2500
   },
-  "11a": {
+  "12a": {
     "s": "Everything was beautiful and nothing hurt",
     "d": 2500
   }
