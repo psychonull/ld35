@@ -62,7 +62,11 @@ export default class Shapeshifter {
 
   createShape(shape) {
     this.current = new Path.RegularPolygon(shape.center, shape.points, shape.radius);
-    this.current.fillColor = shape.color;
+    this.current.style = {
+      fillColor: shape.color,
+      shadowColor: shape.color.clone(),
+      shadowBlur: shape.radius
+    };
     this.baseCenter = shape.center;
     this.baseRadius = shape.radius;
     this.baseScaling = this.current.scaling.clone();
@@ -124,7 +128,12 @@ export default class Shapeshifter {
 
       case 'to-circle': {
         let c = new Path.Circle(this.baseCenter, this.baseRadius / scaleSize);
-        c.fillColor = this.color;
+        //c.fillColor = this.color;
+        c.style = {
+          fillColor: this.color,
+          shadowColor: this.color.clone(),
+          shadowBlur: this.baseRadius / scaleSize
+        };
         c.scaling = this.baseScaling.clone();
         this.current.replaceWith(c);
         this.current = c;
@@ -151,7 +160,12 @@ export default class Shapeshifter {
 
       case 'to-shape': {
         this.circleMove = new Path.Circle(this.current.bounds.center, this.baseRadius/2);
-        this.circleMove.fillColor = this.color;
+        //this.circleMove.fillColor = this.color;
+        this.circleMove.style = {
+          fillColor: this.color,
+          shadowColor: this.color.clone(),
+          shadowBlur: this.baseRadius/2
+        };
         this.state = 'move-to-destination';
         break;
       }

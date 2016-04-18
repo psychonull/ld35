@@ -77,6 +77,7 @@ export default class Cell {
     this._group.onClick = () => {
       if (this.canMove){
         this.isHover = false;
+        this.resetStyle();
         this.store.dispatch(
           nextMove(Object.assign({
             enabled: false,
