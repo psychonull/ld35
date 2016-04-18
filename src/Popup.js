@@ -51,6 +51,7 @@ export default class Popup {
       this.container.innerHTML = '';
     }
     this.container.classList.remove('open');
+    $(this.container).find('a').on('click', () => false); //HACK: avoid clickjackin'
     this.container.removeEventListener('click', this.clickHandler);
   }
 
