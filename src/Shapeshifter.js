@@ -84,6 +84,10 @@ export default class Shapeshifter {
     }
   }
 
+  isNegativeScale(scaling){
+    return scaling.x < 0 || scaling.y < 0;
+  }
+
   onFrame(e) {
     let scaleRate = e.delta*10;
     let scaleSize = 4;
@@ -119,7 +123,8 @@ export default class Shapeshifter {
 
       case 'scale-down': {
         this.current.scaling = this.current.scaling.subtract(scaleRate);
-        if (this.current.scaling.length < this.baseScaling.length/scaleSize){
+        let sc = this.current.scaling;
+        if (this.isNegativeScale(sc) || sc.length < this.baseScaling.length/scaleSize){
           this.current.scaling = this.baseScaling.clone().divide(scaleSize);
           this.state = 'to-circle';
         }
@@ -176,7 +181,8 @@ export default class Shapeshifter {
           vector.divide(vector.length * 0.1)
         );
 
-        if (this.circleMove.scaling.length > this.baseScaling.length){
+        let sc = this.circleMove.scaling;
+        if (this.isNegativeScale(sc) || sc.length > this.baseScaling.length){
           this.circleMove.scaling = this.circleMove.scaling.add(scaleRate/5);
         }
 
@@ -211,7 +217,8 @@ export default class Shapeshifter {
 
       case 'scale-down-2': {
         this.circleMove.scaling = this.circleMove.scaling.subtract(scaleRate);
-        if (this.circleMove.scaling.length < this.baseScaling.length/scaleSize){
+        let sc = this.circleMove.scaling;
+        if (this.isNegativeScale(sc) || sc.length < this.baseScaling.length/scaleSize){
           this.circleMove.scaling = this.baseScaling.clone().divide(scaleSize);
           this.state = 'to-shape-2';
         }
