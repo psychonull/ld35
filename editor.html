@@ -15,22 +15,49 @@
         background-color: black !important;
       }
 
+      .alert {
+        margin: 10px;
+        padding: 3px 10px;
+      }
+
       .panel {
         padding: 10px;
+        background-color: transparent;
+        color: #fff;
+        border: 2px solid #326998;
+        margin-bottom: 2px;
+      }
+
+      .form-group {
+        margin-right: 20px;
+      }
+
+      .form-control {
+        background-color: black;
+        color: #fff;
+      }
+
+      input[type=number] {
+        max-width: 100px;
       }
 
       #grid-container {
         margin: auto;
+        margin-top: 20px;
       }
 
       #grid-container table{
         margin: auto;
+        border-collapse: separate;
+        border-spacing: 3px;
       }
 
       #grid-container td {
         width: 50px;
         height: 50px;
-        border: 1px solid #CDCDCD;
+        border: 1px solid #4B4B4B;
+        border-radius: 6px;
+        position: relative;
       }
 
       .tool {
@@ -38,22 +65,77 @@
         font-weight: bold;
       }
 
+      .tool:hover {
+        color: white;
+        text-decoration: underline;
+      }
+
+      .tool.start {
+        margin-left: 50px;
+      }
+
+      .tool.start, .tool.finish {
+        border-color: #fff;
+        background: #000;
+      }
+
       .tool.selected {
-        border-bottom: 5px solid #316EA1;
+        color: #fff!important;
+      }
+
+      .tool.start.selected, .tool.finish.selected {
+        background-color: #fff;
+        color: #000!important;
       }
 
       .opt0 {
-        background-color: black;
+        border: 2px solid #4B4B4B;
+        background-color: #000;
       }
+      .opt0.selected {
+        background-color: #4B4B4B;
+      }
+
       .opt1 {
+        border: 2px solid #316EA1!important;
+        background-color: #000;
+      }
+      .opt1.selected {
         background-color: #316EA1;
       }
+
       .opt2 {
+        border: 2px solid #A13146!important;
+        background-color: #000;
+      }
+      .opt2.selected {
         background-color: #A13146;
       }
+
       .opt3 {
+        border: 2px solid #6BA348!important;
+        background-color: #000;
+      }
+      .opt3.selected {
         background-color: #6BA348;
       }
+
+      .opt4 {
+        border: 2px solid #A248A3!important;
+        background-color: #000;
+      }
+      .opt4.selected {
+        background-color: #A248A3;
+      }
+
+      .opt5 {
+        border: 2px solid #F88C00!important;
+        background-color: #000;
+      }
+      .opt5.selected {
+        background-color: #F88C00;
+      }
+
       .opt100, .opt900 {
         text-align: center;
       }
@@ -74,7 +156,7 @@
     <div id="editor" class="container">
       <div class="alert alert-dismissible alert-warning" role="alert"><strong>BEWARE:</strong>This editor was originally intended for development use only and is full of bugs and bad ux.</div>
       <div class="row panel">
-        <div class="col-xs-12">
+        <div class="col-xs-8">
           <form class="form-inline">
             <div class="form-group">
               <label for="x">X:</label>
@@ -88,26 +170,28 @@
               <label for="maxMoves">maxMoves:</label>
               <input type="number" class="form-control" id="maxMoves" placeholder="maxMoves">
             </div>
-
-
           </form>
+
         </div>
-      </div>
-      <div class="row panel">
-        <div class="col-xs-8" id="cell-types">
-          Cell Types:
-          <button data-tileType="0" class="btn tool opt0">Empty (1)</button>
-          <button data-tileType="1" class="btn tool opt1">Square (2)</button>
-          <button data-tileType="2" class="btn tool opt2">Triangle (3)</button>
-          <button data-tileType="3" class="btn tool opt3">Circle (4)</button>
-          <button data-tileType="100" class="btn tool">start (5)</button>
-          <button data-tileType="900" class="btn tool">finish (6)</button>
-        </div>
+
         <div class="col-xs-4">
           Actions
           <button type="submit" class="btn btn-default" id="import">Import</button>
           <button type="submit" class="btn btn-default" id="export">Export</button>
           <a type="submit" href="#" target="_blank" class="btn btn-default" id="test-link">Test Level</a>
+        </div>
+      </div>
+      <div class="row panel">
+        <div class="col-xs-12" id="cell-types">
+          Cell Types:
+          <button data-tileType="0" class="btn tool opt0">Empty (1)</button>
+          <button data-tileType="1" class="btn tool opt1">Square (2)</button>
+          <button data-tileType="2" class="btn tool opt2">Triangle (3)</button>
+          <button data-tileType="3" class="btn tool opt3">Circle (4)</button>
+          <button data-tileType="4" class="btn tool opt4">Pentagon (5)</button>
+          <button data-tileType="5" class="btn tool opt5">Hexagon (6)</button>
+          <button data-tileType="100" class="btn tool start">start (7)</button>
+          <button data-tileType="900" class="btn tool finish">finish (8)</button>
         </div>
       </div>
       <div class="row">
