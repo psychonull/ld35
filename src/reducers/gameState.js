@@ -11,7 +11,10 @@ if(ls){
   ls = JSON.parse(ls);
 }
 else {
-  ls = {};
+  ls = {
+    sound: true,
+    maxLevel: 1
+  };
 }
 
 const initialState = {
