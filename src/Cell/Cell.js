@@ -67,6 +67,7 @@ export default class Cell {
         this.isHover = false;
         this.store.dispatch(
           nextMove(Object.assign({
+            target: false,
             enabled: false,
             visible: true
           }, this.getMoveMatrix()))
