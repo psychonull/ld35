@@ -48,13 +48,13 @@ export default class Cell {
     this._group.addChild(this.rect);
 
     this._group.onMouseEnter = () => {
-      if (this.canMove){
+      if (this.isInteractive() && this.canMove){
         this.isHover = true;
       }
     };
 
     this._group.onMouseLeave = () => {
-      if (this.canMove){
+      if (this.isInteractive() && this.canMove){
         this.isHover = false;
         this.resetStyle();
       }
@@ -133,6 +133,10 @@ export default class Cell {
   canMoveTo(/*position*/){
     // return false if is not Implemented
     return false;
+  }
+
+  isInteractive(){
+    return !this.hidden && !this.hiding && !this.showing;
   }
 
   onFrame(e) {

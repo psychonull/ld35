@@ -127,7 +127,7 @@ export default class Grid {
     this.current.unsetCurrent();
 
     if (cell.id === this.target.id){
-      this.onWin();
+      this._onWin();
       return;
     }
 
@@ -173,6 +173,17 @@ export default class Grid {
         this.shape.destroy();
       }, 250);
     }, 500);
+  }
+
+  _onWin(){
+    // TODO: make win animation
+    this.shape.win();
+
+    this.cells.forEach(c => c.hide());
+
+    setTimeout(() => {
+      this.onWin();
+    }, 1000);
   }
 
   onFrame(e) {
