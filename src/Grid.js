@@ -5,7 +5,7 @@ import {
   Circle
 } from './Cell';
 
-import { addMove, changeMove } from './actions/gameStateActions.js';
+import { addMove, changeMove, nextMove } from './actions/gameStateActions.js';
 import { EventEmitter } from 'events';
 import { registerGrid as registerGridSounds } from './sounds/Manager.js';
 
@@ -160,6 +160,7 @@ export default class Grid extends EventEmitter {
     this.store.dispatch(addMove());
     this.store.dispatch(
       changeMove(Object.assign({
+        target: false,
         enabled: true,
         visible: true
       }, cell.getMoveMatrix()))
@@ -186,11 +187,7 @@ export default class Grid extends EventEmitter {
     this.emit('game:lost');
     this.lost = true;
 
-    this.store.dispatch(
-      changeMove({
-        enabled: false,
-        visible: true
-      }));
+    this.clearMoveHelpers();
 
     let last;
     this.cells.forEach((c) => {
@@ -212,7 +209,7 @@ export default class Grid extends EventEmitter {
   }
 
   _onWin(){
-
+    this.clearMoveHelpers();
     this.shape.win();
 
     Particles.fire({
@@ -233,6 +230,24 @@ export default class Grid extends EventEmitter {
     if (this.shape){
       this.shape.onFrame(e);
     }
+  }
+
+  clearMoveHelpers(){
+    this.store.dispatch(
+      changeMove(Object.assign({
+        target: false,
+        enabled: false,
+        visible: true
+      }))
+    );
+
+    this.store.dispatch(
+      nextMove(Object.assign({
+        target: false,
+        enabled: false,
+        visible: true
+      }))
+    );
   }
 
 }
