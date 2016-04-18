@@ -92,11 +92,17 @@ export default class Game extends EventEmitter {
   }
 
   onChangeStore(){
-    let newSoundOption = this.store.getState().gameState.sound;
+    let state = this.store.getState().gameState;
+    let newSoundOption = state.sound;
     if(this.options.sound !== newSoundOption ){
       this.emit(newSoundOption ? 'sound:unmute' : 'sound:mute');
       this.options.sound = newSoundOption;
     }
+
+    window.localStorage.setItem('ld35', JSON.stringify({
+      sound: state.sound,
+      maxLevel: state.maxLevel
+    }));
   }
 
   onContainerClick(){

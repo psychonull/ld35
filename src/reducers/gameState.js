@@ -6,12 +6,20 @@ import {
   RESTART_LEVEL
 } from '../constants/ActionTypes';
 
+let ls = window.localStorage.getItem('ld35');
+if(ls){
+  ls = JSON.parse(ls);
+}
+else {
+  ls = {};
+}
+
 const initialState = {
   levelNumber: 1,
   moves: -1, //HACK: start with -1 since the initial placement counts
   maxMoves: false,
-  sound: true,
-  maxLevel: 1
+  sound: ls.sound,
+  maxLevel: ls.maxLevel
 };
 
 export default function gameState(state = initialState, action) {
