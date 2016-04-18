@@ -1,0 +1,35 @@
+#share-level {
+  text-align: center;
+  font-size: 1.5em;
+  font-family: $hud-font;
+  padding: 30px;
+
+  .label {
+    display: inline;
+  }
+
+  .copy-url {
+    padding: 10px;
+    margin-left: 10px;
+    background-color: #424242;
+    color: white;
+    border: 0;
+  }
+
+  a {
+    cursor: pointer;
+    transition: 0.5s all;
+    font-weight: bold;
+    text-decoration: underline;
+
+    &:visited {
+      color: white;
+    }
+
+    &:hover {
+      text-shadow: -5px 0px 10px rgb(29, 74, 113),
+                    5px 0px 10px rgb(29, 74, 113) ;
+      color: lighten(rgb(29, 74, 113), 20%);
+    }
+  }
+}
