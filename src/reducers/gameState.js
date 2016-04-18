@@ -46,7 +46,7 @@ export default function gameState(state = initialState, action) {
     case LOAD_LEVEL:
       return Object.assign({}, state, {
         moves: -1, maxMoves: action.levelData.maxMoves, author: action.levelData.author,
-        levelNumber: action.levelNumber, maxLevel: Math.max(action.levelNumber, state.maxLevel)});
+        levelNumber: action.levelNumber, maxLevel: Math.max(typeof action.levelNumber === 'string' ? 0 : action.levelNumber, state.maxLevel)});
 		default:
 			return state;
 	}
