@@ -7,7 +7,8 @@ let state = {
   y: null,
   start: null,
   end: null,
-  map: null
+  map: null,
+  author: null
 };
 let selectedTool = null;
 
@@ -21,6 +22,11 @@ $(document).on('ready', () => {
   $('#x, #y').on('change', function() {
     state[this.id] = parseInt($(this).val());
     onChangeGridSize();
+  });
+
+  $('#author').on('change', function(){
+    state.author = $(this).val();
+    refreshExportButton();
   });
 
   $(document).on('keypress', function(e){
@@ -78,6 +84,7 @@ function refreshState(level){
   state.x = level.gridSize[0];
   state.y = level.gridSize[1];
   state.maxMoves = level.maxMoves;
+  state.author = level.author;
   level.cells.forEach((row, j) => {
     row.forEach((cell, i) => {
       if(cell - 100 >= 0 && cell - 100 < 100){
@@ -105,6 +112,7 @@ function refreshControlsFromState(){
   $('#x').val(state.x);
   $('#y').val(state.y);
   $('#maxMoves').val(state.maxMoves);
+  $('#author').val(state.author);
   let $grid = $('<table>');
   for(let i = 0; i < state.y; i++){
     let $row = $('<tr>');
@@ -142,7 +150,8 @@ function getLevelFromState(state){
   let data = {
     gridSize: [state.x, state.y],
     cells,
-    maxMoves: parseInt($('#maxMoves').val()) || false
+    maxMoves: parseInt($('#maxMoves').val()) || false,
+    author: state.author
   };
   return JSON.stringify(data);
 }
@@ -173,7 +182,7 @@ function onClickGridCell(e){
     tool = selectedTool;
   }
   let [x, y] = $(this).data('location').split('-').map((x) => parseInt(x));
-  
+
   if(tool === 100 && !state.map[y][x]){
     console.warn('map start show be of a type ');
   }

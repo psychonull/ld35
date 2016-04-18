@@ -9,6 +9,11 @@
     font-size: 2em;
     text-align: center;
 
+    .author {
+      word-break: break-all;
+      font-size: 0.6em;
+    }
+
     span {
       margin: 0 10px;
 

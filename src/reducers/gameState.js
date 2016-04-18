@@ -26,7 +26,8 @@ const initialState = {
   sound: ls.sound,
   maxLevel: ls.maxLevel,
   currentMove: {},
-  nextMove: {}
+  nextMove: {},
+  author: null
 };
 
 export default function gameState(state = initialState, action) {
@@ -44,7 +45,7 @@ export default function gameState(state = initialState, action) {
       return Object.assign({}, state, {sound: !state.sound});
     case LOAD_LEVEL:
       return Object.assign({}, state, {
-        moves: -1, maxMoves: action.levelData.maxMoves,
+        moves: -1, maxMoves: action.levelData.maxMoves, author: action.levelData.author,
         levelNumber: action.levelNumber, maxLevel: Math.max(action.levelNumber, state.maxLevel)});
 		default:
 			return state;

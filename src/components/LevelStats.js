@@ -7,6 +7,9 @@ const LevelStats = (props) => {
     <div className="level-stats">
       <div className="level-number">
         Level <span className="value">{ props.levelNumber }</span></div>
+      { props.author &&
+        <div className="author">by {props.author}</div>
+      }
       <div className="moves smaller">
         <span>Moves</span>
         <span className="value">{ moves }</span>
