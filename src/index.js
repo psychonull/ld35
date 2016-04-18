@@ -42,3 +42,7 @@ window.onload = function() {
     </Provider>,
     document.getElementById('game-hud'));
 };
+
+window.onhashchange = function(){
+  window.location.reload();
+}
