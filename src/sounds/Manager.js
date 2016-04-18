@@ -1,5 +1,6 @@
 import { Howler } from 'howler';
 import * as Sounds from './index.js';
+import $ from 'jquery';
 
 export const register = (game) => {
 
@@ -15,12 +16,7 @@ export const register = (game) => {
     Howler.unmute();
   });
 
-  // inneficient!
-  document.addEventListener('mousemove', function(){
-    if(document.querySelector('a:hover')){
-      Sounds.hoverLink.play();
-    }
-  });
+  $(document).on('mouseenter', 'a', () => Sounds.hoverLink.play());
 
 };
 

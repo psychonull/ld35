@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "howler": "^1.1.29",
+    "jquery": "^2.2.3",
     "paper": "^0.9.25",
     "qs": "^6.1.0",
     "react": "^15.0.1",
