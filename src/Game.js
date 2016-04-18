@@ -7,6 +7,7 @@ import Particles from './Particles';
 import story from './story.js';
 import Popup from './Popup.js';
 import { register as registerSoundManager } from './sounds/Manager.js';
+import winMessage from './winMessage.js';
 
 export default class Game extends EventEmitter {
 
@@ -75,8 +76,10 @@ export default class Game extends EventEmitter {
     this.emit('game:goal', this.level);
 
     if(this.level == levels.length -1){
-      window.alert("There are no more levels! starting again...");
-      window.location.reload();
+      this.storyPopup.show(winMessage, {
+        timeout: 10000,
+        skippable: true
+      }).then(()=> window.location.reload());
       return;
     }
 
