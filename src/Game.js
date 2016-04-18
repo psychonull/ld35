@@ -125,7 +125,8 @@ export default class Game extends EventEmitter {
     }
     return this.storyPopup.show(s.s, {
       timeout: s.d || DEFAULT_DURATION,
-      skippable: true
+      skippable: true,
+      video: s.v
     });
   }
 

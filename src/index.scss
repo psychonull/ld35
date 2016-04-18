@@ -52,6 +52,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 0;
 
   &.open {
     opacity: 1;
@@ -65,6 +66,19 @@ body {
     // top: 50%;
   }
 
+  video {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1;
+    transform: translateX(-50%) translateY(-50%);
+    transition: 1s opacity;
+    opacity: .5;
+  }
 }
 
 .hidden {
