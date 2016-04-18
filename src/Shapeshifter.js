@@ -129,6 +129,14 @@ export default class Shapeshifter {
         this.current.replaceWith(c);
         this.current = c;
         this.state = 'scale-up';
+
+        Particles.fire({
+          type: 'circle',
+          position: this.current.bounds.center,
+          radius: 1,
+          amount: 4,
+          color: this.color
+        });
         break;
       }
 
@@ -210,6 +218,14 @@ export default class Shapeshifter {
         this.current.scaling = this.current.scaling.add(scaleRate);
         if (this.current.scaling.length > this.baseScaling.length*(scaleSize/3)){
           this.current.scaling = this.baseScaling.clone();
+
+          Particles.fire({
+            type: 'circle',
+            position: this.current.bounds.center,
+            radius: 1,
+            amount: 4,
+            color: this.color
+          });
 
           this.onArrived(this.currentCell);
           this.state = 'idle';

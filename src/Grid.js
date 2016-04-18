@@ -4,11 +4,13 @@ import {
   Triangle,
   Circle
 } from './Cell';
+
 import { addMove } from './actions/gameStateActions.js';
 import { EventEmitter } from 'events';
 import { registerGrid as registerGridSounds } from './sounds/Manager.js';
 
 import Shapeshifter from './Shapeshifter';
+import Particles from './Particles';
 
 export default class Grid extends EventEmitter {
 
@@ -185,8 +187,15 @@ export default class Grid extends EventEmitter {
 
   _onWin(){
     this.emit('move:target');
-    // TODO: make win animation
+
     this.shape.win();
+
+    Particles.fire({
+      position: this.target.getCenter(),
+      radius: 2,
+      amount: 100,
+      color: '#D4AF37'
+    });
 
     this.cells.forEach(c => c.hide());
 

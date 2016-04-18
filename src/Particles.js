@@ -12,16 +12,22 @@ class Particles {
   fire(options){
 
     let {
+      type,
       position,
       radius,
       amount,
       color
     } = options;
 
-    for (var i=0; i < amount; i++) {
-			var spark = new Path.Rectangle(
-        new Point(position),
-        new Size(radius, radius));
+    for (let i=0; i < amount; i++) {
+      let spark;
+
+      if (type === 'circle'){
+        spark = new Path.Circle(new Point(position), radius);
+      }
+      else {
+        spark = new Path.Rectangle(new Point(position), new Size(radius, radius));
+      }
 
 			spark.fillColor = color;
 
