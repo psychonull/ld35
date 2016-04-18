@@ -32,7 +32,7 @@ const MainMenu = (props) => {
     <div class="main-menu">
       <h1 className="title">LD35: Game</h1>
       <div className="options">
-        <a href="" onClick={(e) => {e.preventDefault(); startAndClose(props, true);}}><h3>History Mode</h3></a>
+        <a href="" onClick={(e) => {e.preventDefault(); startAndClose(props, true);}}><h3>Story Mode</h3></a>
         {
           maxLevel !== 1 &&
           <a href="" onClick={(e) => {e.preventDefault(); startAndClose(props, true, true);}}><h4>Continue</h4></a>
