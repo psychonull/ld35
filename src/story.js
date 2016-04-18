@@ -1,13 +1,11 @@
 const storyByLevel = {
   "1": {
     "s": "In the beginnings, everything was so simple.",
-    "d": 7000,
-    "v": "HappyTintedAfricanmolesnake"
+    "d": 7000
   },
   "3": {
     "s": "But as i started to discover new things, I discovered a new self",
-    "d": 6500,
-    "v": "GrandMenacingIndianelephant"
+    "d": 6500
   },
   "4": {
     "s": "Things got harder",
@@ -19,8 +17,7 @@ const storyByLevel = {
   },
   "7": {
     "s": "Every place makes me feel different.",
-    "d": 2500,
-    "v": "AffectionateClumsyHawaiianmonkseal"
+    "d": 2500
   },
   "8": {
     "s": "I need to get to tomorrow before wearing down my energy ",
