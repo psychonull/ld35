@@ -3,7 +3,9 @@ import {
   ADD_MOVE,
   RESET_MOVES,
   LOAD_LEVEL,
-  RESTART_LEVEL
+  RESTART_LEVEL,
+  CHANGE_MOVE,
+  CHANGE_NEXT
 } from '../constants/ActionTypes';
 
 let ls = window.localStorage.getItem('ld35');
@@ -22,11 +24,17 @@ const initialState = {
   moves: -1, //HACK: start with -1 since the initial placement counts
   maxMoves: false,
   sound: ls.sound,
-  maxLevel: ls.maxLevel
+  maxLevel: ls.maxLevel,
+  currentMove: {},
+  nextMove: {}
 };
 
 export default function gameState(state = initialState, action) {
 	switch (action.type) {
+    case CHANGE_MOVE:
+      return Object.assign({}, state, {currentMove: action.moveGrid});
+    case CHANGE_NEXT:
+      return Object.assign({}, state, {nextMove: action.moveGrid});
     case ADD_MOVE:
       return Object.assign({}, state, {moves: state.moves + 1});
     case RESTART_LEVEL:

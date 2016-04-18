@@ -22,11 +22,14 @@ export default class Square extends Cell {
   }
 
   getMoveMatrix(){
-    return [
-      [0, mx,0],
-      [mx,-1,mx],
-      [0, mx,0]
-    ];
+    return {
+      color: this.baseColor,
+      matrix: [
+        [0, mx,0],
+        [mx,-1,mx],
+        [0, mx,0]
+      ]
+    };
   }
 
   onFrame(e) {

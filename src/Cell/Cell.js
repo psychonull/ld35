@@ -1,4 +1,5 @@
 
+import { nextMove } from '../actions/gameStateActions.js';
 import { generate as getId } from 'shortid';
 import colorMap from './colorMap';
 
@@ -50,18 +51,38 @@ export default class Cell {
     this._group.onMouseEnter = () => {
       if (this.isInteractive() && this.canMove){
         this.isHover = true;
+        this.store.dispatch(
+          nextMove(Object.assign({
+            enabled: this.isTarget ? false : true,
+            visible: true
+          }, this.getMoveMatrix()))
+        );
       }
     };
 
     this._group.onMouseLeave = () => {
       if (this.isInteractive() && this.canMove){
         this.isHover = false;
+
+        this.store.dispatch(
+          nextMove(Object.assign({
+            enabled: false,
+            visible: true
+          }, this.getMoveMatrix()))
+        );
         this.resetStyle();
       }
     };
 
     this._group.onClick = () => {
       if (this.canMove){
+        this.isHover = false;
+        this.store.dispatch(
+          nextMove(Object.assign({
+            enabled: false,
+            visible: true
+          }, this.getMoveMatrix()))
+        );
         this.onMove();
       }
     };

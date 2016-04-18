@@ -5,7 +5,7 @@ import {
   Circle
 } from './Cell';
 
-import { addMove } from './actions/gameStateActions.js';
+import { addMove, changeMove } from './actions/gameStateActions.js';
 import { EventEmitter } from 'events';
 import { registerGrid as registerGridSounds } from './sounds/Manager.js';
 
@@ -72,7 +72,8 @@ export default class Grid extends EventEmitter {
           },
           code,
           maxMoves: this.maxMoves,
-          onReady: () => this.checkStart()
+          onReady: () => this.checkStart(),
+          store: this.store
         };
 
         let cell;
@@ -127,6 +128,14 @@ export default class Grid extends EventEmitter {
     if (this.shape.isMoving()){
       return;
     }
+
+    this.store.dispatch(
+      changeMove(Object.assign({
+        enabled: false,
+        visible: true
+      }, cell.getMoveMatrix()))
+    );
+
     this.emit('move:start');
     this.shape.moveTo(cell);
   }
@@ -147,6 +156,12 @@ export default class Grid extends EventEmitter {
     this.calculateMoves();
 
     this.store.dispatch(addMove());
+    this.store.dispatch(
+      changeMove(Object.assign({
+        enabled: true,
+        visible: true
+      }, cell.getMoveMatrix()))
+    );
 
     if(this.isLevelLost()){
       this.onLevelLost();
@@ -167,6 +182,14 @@ export default class Grid extends EventEmitter {
 
   onLevelLost(){
     this.lost = true;
+
+    this.store.dispatch(
+      changeMove(Object.assign({
+        enabled: false,
+        visible: true
+      }, cell.getMoveMatrix()))
+    );
+
     let last;
     this.cells.forEach((c) => {
       if(c.id !== this.current.id){

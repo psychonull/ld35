@@ -52,6 +52,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 100;
 
   &.open {
     opacity: 1;
@@ -81,3 +82,4 @@ a.secondary {
 @import './styles/Help.scss';
 @import './styles/StoryPopup.scss';
 @import './styles/MainMenu.scss';
+@import './styles/MoveHelper.scss';

@@ -23,11 +23,14 @@ export default class Triangle extends Cell {
   }
 
   getMoveMatrix(){
-    return [
-      [mx,0,mx],
-      [0,-1,0],
-      [mx,0,mx]
-    ];
+    return {
+      color: this.baseColor,
+      matrix: [
+        [mx,0,mx],
+        [0,-1,0],
+        [mx,0,mx]
+      ]
+    };
   }
 
   onFrame(e) {

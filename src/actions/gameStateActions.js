@@ -19,3 +19,11 @@ export function loadLevel(levelData, levelNumber){
 export function restartLevel(){
 	return { type: types.RESTART_LEVEL };
 }
+
+export function changeMove(moveGrid){
+  return { type: types.CHANGE_MOVE, moveGrid };
+}
+
+export function nextMove(moveGrid){
+  return { type: types.CHANGE_NEXT, moveGrid };
+}

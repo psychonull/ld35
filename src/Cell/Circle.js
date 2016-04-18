@@ -20,11 +20,14 @@ export default class Circle extends Cell {
   }
 
   getMoveMatrix(){
-    return [
-      [mx,mx,mx],
-      [mx,-1,mx],
-      [mx,mx,mx]
-    ];
+    return {
+      color: this.baseColor,
+      matrix: [
+        [mx,mx,mx],
+        [mx,-1,mx],
+        [mx,mx,mx]
+      ]
+    };
   }
 
   onFrame(e) {
