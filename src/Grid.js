@@ -5,12 +5,15 @@ import {
   Circle
 } from './Cell';
 import { addMove } from './actions/gameStateActions.js';
+import { EventEmitter } from 'events';
+import { registerGrid as registerGridSounds } from './sounds/Manager.js';
 
 import Shapeshifter from './Shapeshifter';
 
-export default class Grid {
+export default class Grid extends EventEmitter {
 
   constructor(store, cfg, bounds, onWin){
+    super();
     this.store = store;
     this.cfg = cfg;
     this.bounds = bounds;
@@ -24,6 +27,7 @@ export default class Grid {
     this.cellsLoaded = 0;
 
     this._generate();
+    registerGridSounds(this);
   }
 
   _generate(){
@@ -121,11 +125,12 @@ export default class Grid {
     if (this.shape.isMoving()){
       return;
     }
-
+    this.emit('move:start');
     this.shape.moveTo(cell);
   }
 
   onShapeArrived(cell){
+    this.emit('move:end');
     this.current.canMove = false;
     this.current.unsetCurrent();
 
@@ -179,6 +184,7 @@ export default class Grid {
   }
 
   _onWin(){
+    this.emit('move:target');
     // TODO: make win animation
     this.shape.win();
 
