@@ -184,11 +184,10 @@ export default class Grid extends EventEmitter {
     this.lost = true;
 
     this.store.dispatch(
-      changeMove(Object.assign({
+      changeMove({
         enabled: false,
         visible: true
-      }, cell.getMoveMatrix()))
-    );
+      }));
 
     let last;
     this.cells.forEach((c) => {
