@@ -21,6 +21,7 @@ export default class Cell {
 
     this.hidden = false;
     this.hiding = false;
+    this.showing = false;
     this._generate();
   }
 
@@ -47,13 +48,13 @@ export default class Cell {
     this._group.addChild(this.rect);
 
     this._group.onMouseEnter = () => {
-      if (this.canMove){
+      if (this.isInteractive() && this.canMove){
         this.isHover = true;
       }
     };
 
     this._group.onMouseLeave = () => {
-      if (this.canMove){
+      if (this.isInteractive() && this.canMove){
         this.isHover = false;
         this.resetStyle();
       }
@@ -65,6 +66,7 @@ export default class Cell {
       }
     };
 
+    this._group.scaling = 0.1;
   }
 
   _getSteps(from, to, max){
@@ -133,9 +135,25 @@ export default class Cell {
     return false;
   }
 
+  isInteractive(){
+    return !this.hidden && !this.hiding && !this.showing;
+  }
+
   onFrame(e) {
     let sinus;
     if (this.hidden){
+      return;
+    }
+
+    if(this.showing){
+      this._group.scaling = this._group.scaling.multiply(
+        ((e.delta *2.8)/ this._group.scaling.length) + 1);
+
+      if (this._group.scaling.length > 1.5){
+        this.showing = false;
+        this._group.scaling = 1;
+        this.onReady();
+      }
       return;
     }
 
@@ -171,6 +189,10 @@ export default class Cell {
       this.rect.fillColor.saturation = 0.8;
       this.rect.fillColor.brightness = 0.2;
     }
+  }
+
+  show(){
+    this.showing = true;
   }
 
   hide(){

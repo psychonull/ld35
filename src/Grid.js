@@ -21,17 +21,13 @@ export default class Grid {
     this.cells = [];
     this.current = null;
     this.target = null;
+    this.cellsLoaded = 0;
 
     this._generate();
-
-    this.shape = new Shapeshifter({
-      onArrived: cell => this.onShapeArrived(cell)
-    });
-
-    this.shape.setCell(this.current);
   }
 
   _generate(){
+    this.cellsLoaded = 0;
     let margin = 50;
     let wMargin = margin/2;
 
@@ -66,7 +62,8 @@ export default class Grid {
             h: hCell
           },
           code,
-          maxMoves: this.maxMoves
+          maxMoves: this.maxMoves,
+          onReady: () => this.checkStart()
         };
 
         let cell;
@@ -80,16 +77,29 @@ export default class Grid {
         cell.onMove = this.onMoveTo.bind(this, cell);
 
         if (current){
-          cell.setCurrent();
           this.current = cell;
         }
         else if (target){
-          cell.setTarget();
           this.target = cell;
         }
 
+        cell.show();
         this.cells.push(cell);
       }
+    }
+  }
+
+  checkStart() {
+    this.cellsLoaded++;
+    if (this.cellsLoaded === this.cells.length){
+      this.current.setCurrent();
+      this.target.setTarget();
+
+      this.shape = new Shapeshifter({
+        onArrived: cell => this.onShapeArrived(cell)
+      });
+
+      this.shape.setCell(this.current);
     }
   }
 
@@ -117,7 +127,7 @@ export default class Grid {
     this.current.unsetCurrent();
 
     if (cell.id === this.target.id){
-      this.onWin();
+      this._onWin();
       return;
     }
 
@@ -163,6 +173,17 @@ export default class Grid {
         this.shape.destroy();
       }, 250);
     }, 500);
+  }
+
+  _onWin(){
+    // TODO: make win animation
+    this.shape.win();
+
+    this.cells.forEach(c => c.hide());
+
+    setTimeout(() => {
+      this.onWin();
+    }, 1000);
   }
 
   onFrame(e) {

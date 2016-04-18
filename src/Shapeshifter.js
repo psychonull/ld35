@@ -72,6 +72,11 @@ export default class Shapeshifter {
     this.state = 'destroy';
   }
 
+  win(){
+    this.state = null;
+    this.current.visible = false;
+  }
+
   onFrame(e) {
     let scaleRate = e.delta*10;
     let scaleSize = 4;
