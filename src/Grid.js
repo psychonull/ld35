@@ -4,9 +4,11 @@ import {
   Triangle,
   Circle
 } from './Cell';
+
 import { addMove } from './actions/gameStateActions.js';
 
 import Shapeshifter from './Shapeshifter';
+import Particles from './Particles';
 
 export default class Grid {
 
@@ -179,8 +181,14 @@ export default class Grid {
   }
 
   _onWin(){
-    // TODO: make win animation
     this.shape.win();
+
+    Particles.fire({
+      position: this.target.getCenter(),
+      radius: 2,
+      amount: 100,
+      color: '#D4AF37'
+    });
 
     this.cells.forEach(c => c.hide());
 
