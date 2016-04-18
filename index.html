@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+
+  <head>
+    <title>Ludum Dare 35</title>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href='https://fonts.googleapis.com/css?family=Special+Elite|Megrim' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="assets/css/fontello.css">
+    <link rel="stylesheet" href="dist/ld-35.css">
+  </head>
+
+  <body>
+    <div id="container" class="hidden">
+      <div id="game-hud">
+      </div>
+      <div class="game-container" id="game-container">
+        <canvas id="game-viewport" width="600" height="480"></canvas>
+      </div>
+    </div>
+    <div class="popup" id="popup">
+    </div>
+    <div class="popup" id="level-selection">
+    </div>
+    <div class="popup" id="main-menu">
+    </div>
+    <div class="popup" id="help">
+      <div>
+        <ul>
+          <li>Get from the starting point to the end in the least amount of movements.</li>
+          <li>Each tile allows you to move in a certain way.</li>
+          <li>Click target tile to move there.</li>
+        </ul>
+      </div>
+      <a class="secondary">
+        OK
+      </a>
+    </div>
+    <script src="dist/ld-35.js"></script>
+  </body>
+
+</html>

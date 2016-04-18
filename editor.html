@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+
+  <head>
+    <title>Ludum Dare 35 - Editor</title>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="dist/ld-35.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <style>
+      #grid-container td {
+        width: 50px;
+        height: 50px;
+        border: 1px solid #CDCDCD;
+      }
+
+      .opt0 {
+        background-color: white;
+      }
+      .opt1 {
+        background-color: lightblue;
+      }
+      .opt2 {
+        background-color: olive;
+      }
+      .opt3 {
+        background-color: #DDA9A9;
+      }
+      .opt100::after {
+        content: 'S';
+      }
+      .opt900::after {
+        content: 'F';
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="editor" class="container">
+      <div class="row panel">
+        <div class="col-xs-12">
+          <form class="form-inline">
+            <div class="form-group">
+              <label for="x">X:</label>
+              <input type="number" class="form-control" id="x" placeholder="x">
+            </div>
+            <div class="form-group">
+              <label for="y">Y:</label>
+              <input type="number" class="form-control" id="y" placeholder="y">
+            </div>
+            <div class="form-group">
+              <label for="maxMoves">maxMoves:</label>
+              <input type="number" class="form-control" id="maxMoves" placeholder="maxMoves">
+            </div>
+            <button type="submit" class="btn btn-default" id="export">Generar JSON</button>
+            <button type="submit" class="btn btn-default" id="import">Importar</button>
+            <button data-tileType="0" class="btn tool">Empty</button>
+            <button data-tileType="1" class="btn tool">Dot</button>
+            <button data-tileType="2" class="btn tool">Triangle</button>
+            <button data-tileType="3" class="btn tool">Square</button>
+            <button data-tileType="100" class="btn tool">start</button>
+            <button data-tileType="900" class="btn tool">finish</button>
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12" id="grid-container">
+
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade modal-lg" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="export-modal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <textarea id="export-text" rows="20" style="width: 100%;"></textarea>
+            <a href="#" target="_blank" id="test-link">TEST!</a>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="modal fade modal-lg" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="import-modal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <textarea id="import-text" rows="20" style="width: 100%;"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="process-import">Import</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="dist/editor.js"></script>
+  </body>
+
+</html>
