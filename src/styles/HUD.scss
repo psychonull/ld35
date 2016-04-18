@@ -1,22 +1,31 @@
 
 #game-hud {
-  width: 600px;
-  margin: 10px auto;
-  padding: 20px;
+  width: 300px;
+  float: left;
+  padding: 0 20px;
 
   .level-stats {
     font-family: $hud-font;
     font-size: 2em;
-    display: inline;
+    text-align: center;
+
+    span {
+      margin: 0 10px;
+
+      &:first-child {
+        margin: 0;
+        margin-right: 10px;
+      }
+    }
 
     .smaller {
       font-size: 0.7em;
     }
 
     div {
-
-      padding: 0 10px 0 10px;
-      display: inline;
+      padding: 0 20px 10px 20px;
+      margin: 10px 0;
+      border-bottom: 2px solid #326998;
 
       .value {
         font-weight: bold;
@@ -25,12 +34,13 @@
   }
 
   .buttons {
-
-    display: inline;
     font-size: 1.5em;
+    text-align: center;
+    padding: 20px;
+    border-bottom: 2px solid #326998;
 
     a {
-      padding: 5px;
+      padding: 15px;
       cursor: pointer;
       transition: 0.5s all;
 
