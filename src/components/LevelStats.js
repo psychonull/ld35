@@ -4,8 +4,11 @@ const LevelStats = (props) => {
 
   let moves = props.moves === -1 ? 0 : props.moves;
 
-  let warning = props.maxMoves - moves < 3 ? 'warning' : '';
-  warning = props.maxMoves - moves < 2 ? 'danger' : warning;
+  let warning = '';
+  if (props.maxMoves){
+    warning = props.maxMoves - moves < 3 ? 'warning' : '';
+    warning = props.maxMoves - moves < 2 ? 'danger' : warning;
+  }
 
   return (
     <div className="level-stats">
