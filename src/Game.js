@@ -6,6 +6,7 @@ import { EventEmitter } from 'events';
 import Particles from './Particles';
 import story from './story.js';
 import Popup from './Popup.js';
+import { register as registerSoundManager } from './sounds/Manager.js';
 
 export default class Game extends EventEmitter {
 
@@ -20,6 +21,10 @@ export default class Game extends EventEmitter {
     this.container = document.getElementById('game-container');
     this.container.addEventListener('click', () => this.onContainerClick());
     this.storyPopup = new Popup('popup');
+    registerSoundManager(this);
+    if(!this.store.getState().gameState.sound){
+      this.emit('sound:mute');
+    }
   }
 
   start(lvlIdx, options, isReset){
