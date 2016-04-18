@@ -21,6 +21,7 @@ export default class Cell {
 
     this.hidden = false;
     this.hiding = false;
+    this.showing = false;
     this._generate();
   }
 
@@ -65,6 +66,7 @@ export default class Cell {
       }
     };
 
+    this._group.scaling = 0.1;
   }
 
   _getSteps(from, to, max){
@@ -139,6 +141,18 @@ export default class Cell {
       return;
     }
 
+    if(this.showing){
+      this._group.scaling = this._group.scaling.multiply(
+        ((e.delta *2.8)/ this._group.scaling.length) + 1);
+
+      if (this._group.scaling.length > 1.5){
+        this.showing = false;
+        this._group.scaling = 1;
+        this.onReady();
+      }
+      return;
+    }
+
     if (this.hiding){
       this._group.scaling = this._group.scaling.multiply(0.9);
       if (this._group.scaling.length <= 0.1){
@@ -171,6 +185,10 @@ export default class Cell {
       this.rect.fillColor.saturation = 0.8;
       this.rect.fillColor.brightness = 0.2;
     }
+  }
+
+  show(){
+    this.showing = true;
   }
 
   hide(){

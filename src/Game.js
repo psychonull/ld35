@@ -26,6 +26,7 @@ export default class Game extends EventEmitter {
     if(lvlIdx === 0 && options){ //hack
       this.emit('game:start');
     }
+
     this.clear();
     this.level = lvlIdx;
     this.options = Object.assign({}, this.options, options);
@@ -63,7 +64,7 @@ export default class Game extends EventEmitter {
 
   onWinLevel(){
     this.emit('level:win', this.level);
-    window.alert("You Win!");
+
     if(this.level == levels.length -1){
       window.alert("There are no more levels! starting again...");
       window.location.reload();
