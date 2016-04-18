@@ -22,8 +22,8 @@ export default class Game extends EventEmitter {
     this.storyPopup = new Popup('popup');
   }
 
-  start(lvlIdx, options){
-    if(lvlIdx === 0 && options){ //hack
+  start(lvlIdx, options, isReset){
+    if(lvlIdx === 0 && !isReset){
       this.emit('game:start');
     }
 
@@ -31,7 +31,7 @@ export default class Game extends EventEmitter {
     this.level = lvlIdx;
     this.options = Object.assign({}, this.options, options);
 
-    if(this.options.isHistory){
+    if(this.options.isHistory && !isReset){
       this.showStory(lvlIdx + 1).then(() => this.createGridAndDraw(lvlIdx));
     }
     else {
@@ -42,11 +42,11 @@ export default class Game extends EventEmitter {
   }
 
   createGridAndDraw(lvlIdx){
+    this.store.dispatch(loadLevel(levels[lvlIdx], lvlIdx + 1));
 
     this.grid = new Grid(this.store, levels[lvlIdx], view.bounds,
       () => this.onWinLevel());
 
-    this.store.dispatch(loadLevel(levels[lvlIdx], lvlIdx + 1));
 
     view.draw();
   }
@@ -75,7 +75,7 @@ export default class Game extends EventEmitter {
   }
 
   onRestartLevel(){
-    this.start(this.level);
+    this.start(this.level, {}, true);
   }
 
   onFrame(e) {
@@ -93,11 +93,17 @@ export default class Game extends EventEmitter {
   }
 
   onChangeStore(){
-    let newSoundOption = this.store.getState().gameState.sound;
+    let state = this.store.getState().gameState;
+    let newSoundOption = state.sound;
     if(this.options.sound !== newSoundOption ){
       this.emit(newSoundOption ? 'sound:unmute' : 'sound:mute');
       this.options.sound = newSoundOption;
     }
+
+    window.localStorage.setItem('ld35', JSON.stringify({
+      sound: state.sound,
+      maxLevel: state.maxLevel
+    }));
   }
 
   onContainerClick(){
