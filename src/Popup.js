@@ -18,6 +18,7 @@ export default class Popup {
 
   show(content, options){
     return new Promise((resolve) => {
+      $(this.container).find('a').off('click', this.falsee);
       let opt = Object.assign({}, defaults, options);
       if(content){
         if(typeof content === 'object'){
@@ -51,7 +52,7 @@ export default class Popup {
       this.container.innerHTML = '';
     }
     this.container.classList.remove('open');
-    $(this.container).find('a').on('click', () => false); //HACK: avoid clickjackin'
+    $(this.container).find('a').on('click', this.falsee); //HACK: avoid clickjackin'
     this.container.removeEventListener('click', this.clickHandler);
   }
 
@@ -60,6 +61,10 @@ export default class Popup {
       <source type="video/webm" src="https://zippy.gfycat.com/${name}.webm">
       <source type="video/mp4" src="https://fat.gfycat.com/${name}.mp4">
     </video>`);
+  }
+
+  falsee(){
+    return false;
   }
 
 }
