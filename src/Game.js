@@ -32,6 +32,9 @@ export default class Game extends EventEmitter {
     if(lvlIdx === 0 && !isReset){
       this.emit('game:start');
     }
+    else {
+      this.emit('level:start', lvlIdx + 1);
+    }
 
     this.clear();
     this.level = lvlIdx;

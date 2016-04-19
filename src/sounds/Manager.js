@@ -4,8 +4,18 @@ import $ from 'jquery';
 
 export const register = (game) => {
 
+  let bgPlaying = false;
+
   game.on('game:start', () => {
     Sounds.bgMusic.play();
+    bgPlaying = true;
+  });
+
+  game.on('level:start', () => {
+    if(!bgPlaying){
+      Sounds.bgMusic.play();
+      bgPlaying = true;
+    }
   });
 
   game.on('story:in', () => {
