@@ -12,7 +12,7 @@ const startAndClose = (props, isHistory, isContinue) => {
   props.onClose();
 };
 
-const EDITOR_ENTRY_LEVEL = 7;
+const EDITOR_ENTRY_LEVEL = 10;
 
 
 const clickLevelEditor = (props) => {
