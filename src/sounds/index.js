@@ -4,7 +4,7 @@ let path = 'assets/sounds/';
 
 // bgm
 export const bgMusic = new Howl({
-  urls: [path + 'bg.mp3'],
+  urls: [path + 'Ludum35A.mp3'],
   loop: true,
   volume: .5
 });
