@@ -34,7 +34,7 @@ const Buttons = (props) => {
       <a className="icon-cw" onClick={() => props.game.onRestartLevel()} title="Restart level"></a>
       <a className="icon-shuffle"
         onClick={() => showLevelSelection(props.game)} title="Select Level"></a>
-      <a className={ props.sound ? 'icon-volume-off' : 'icon-volume' }
+      <a className={ !props.sound ? 'icon-volume-off' : 'icon-volume' }
         onClick={() => props.actions.toggleSound()}
         title={ props.sound ? 'Mute' : 'Turn Sound ON' }>
       </a>
