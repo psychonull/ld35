@@ -5,7 +5,7 @@ import $ from 'jquery';
 export const register = (game) => {
 
   game.on('game:start', () => {
-    //Sounds.bgMusic.play();
+    Sounds.bgMusic.play();
   });
 
   game.on('story:in', () => {
