@@ -64,7 +64,7 @@ export default class Game extends EventEmitter {
     this.customLevel = levelData;
     this.clear();
     this.grid = new Grid(this.store, levelData, view.bounds,
-      () => this.onWinCustomLevel());
+      () => this.onWinCustomLevel(), () => this.onRestartLevel());
 
     this.store.dispatch(loadLevel(levelData, 'Custom'));
   }
