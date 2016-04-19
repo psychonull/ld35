@@ -12,7 +12,7 @@ const startAndClose = (props, isHistory, isContinue) => {
   props.onClose();
 };
 
-const EDITOR_ENTRY_LEVEL = 7;
+const EDITOR_ENTRY_LEVEL = 10;
 
 
 const clickLevelEditor = (props) => {
@@ -30,9 +30,9 @@ const MainMenu = (props) => {
   }
   return (
     <div class="main-menu">
-      <h1 className="title">LD35: Game</h1>
+      <h1 className="title">reshapybius</h1>
       <div className="options">
-        <a href="" onClick={(e) => {e.preventDefault(); startAndClose(props, true);}}><h3>History Mode</h3></a>
+        <a href="" onClick={(e) => {e.preventDefault(); startAndClose(props, true);}}><h3>Story Mode</h3></a>
         {
           maxLevel !== 1 &&
           <a href="" onClick={(e) => {e.preventDefault(); startAndClose(props, true, true);}}><h4>Continue</h4></a>
