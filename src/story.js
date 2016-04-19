@@ -12,31 +12,31 @@ const storyByLevel = {
     "d": 2200
   },
   "6": {
-    "s": "and even found other myselves",
+    "s": "and my selves were not behaving all the same.",
     "d": 2500
   },
   "8": {
-    "s": "Every place makes me feel different.",
+    "s": "Every place makes me feel different",
     "d": 2500
   },
   "9": {
     "s": "I need to get to tomorrow before wearing down my energy ",
     "d": 2500
   },
-  "8a": {
+  "11": {
     "s": "I don't know what's the goal here. But the show must go on.",
     "d": 2500
   },
-  "9a": {
-    "s": "Go on.",
+  "12": {
+    "s": "Go on...    ....",
     "d": 2500
   },
-  "11a": {
-    "s": "Keep going.",
+  "13": {
+    "s": "Keep going.........................",
     "d": 2500
   },
-  "12a": {
-    "s": "Everything was beautiful and nothing hurt",
+  "14": {
+    "s": '"Everything was beautiful and nothing hurt"',
     "d": 2500
   }
 };
