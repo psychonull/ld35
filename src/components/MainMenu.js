@@ -30,7 +30,7 @@ const MainMenu = (props) => {
   }
   return (
     <div class="main-menu">
-      <h1 className="title">LD35: Game</h1>
+      <h1 className="title">reshapybius</h1>
       <div className="options">
         <a href="" onClick={(e) => {e.preventDefault(); startAndClose(props, true);}}><h3>Story Mode</h3></a>
         {

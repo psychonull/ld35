@@ -2,7 +2,7 @@ import { PropTypes } from 'react';
 
 const ShareLevel = (props) => {
   let levelUrl = location.href;
-  let twitterLink = `https://twitter.com/intent/tweet?url=${encodeURIComponent(levelUrl)}&hashtags=ld35&text=Play my level on the game`;
+  let twitterLink = `https://twitter.com/intent/tweet?url=${encodeURIComponent(levelUrl)}&hashtags=reshapybius,ld35&text=I challenge you to beat this level!`;
   return (
     <div id="share-level">
       <h1>CUSTOM LEVEL COMPLETED</h1>
